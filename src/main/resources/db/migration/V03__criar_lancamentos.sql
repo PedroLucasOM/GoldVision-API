@@ -1,7 +1,8 @@
 create table lancamento(
 	codigo bigint(20) primary key auto_increment,
-	dataVencimento date not null,
-	dataPagamento date,
+	descricao varchar(30) not null,
+	data_vencimento date not null,
+	data_pagamento date,
 	valor decimal(10,2) not null,
 	observacao varchar(100),
 	tipo varchar(20) not null,
