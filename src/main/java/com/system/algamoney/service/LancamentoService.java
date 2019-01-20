@@ -6,13 +6,27 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.system.algamoney.model.Lancamento;
+import com.system.algamoney.model.Pessoa;
 import com.system.algamoney.repository.LancamentoRepository;
+import com.system.algamoney.repository.PessoaRepository;
+import com.system.algamoney.service.exception.PessoaInativaException;
 
 @Service
 public class LancamentoService {
 
 	@Autowired
 	private LancamentoRepository repository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
+	public Lancamento salvar(Lancamento lancamento) {
+		Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+		if(pessoa.isInativo()) {
+			throw new PessoaInativaException();
+		}
+		return repository.save(lancamento);
+	}
 	
 	public Lancamento atualizar(Lancamento lancamento, Long codigo) {
 		Lancamento lancamentoSalvo = repository.findOne(codigo);

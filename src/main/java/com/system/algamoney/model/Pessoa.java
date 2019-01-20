@@ -1,5 +1,7 @@
 package com.system.algamoney.model;
 
+import java.beans.Transient;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "pessoa")
@@ -25,6 +29,12 @@ public class Pessoa {
 	
 	@NotNull
 	private Boolean ativo;
+	
+	@Transient
+	@JsonIgnore
+	public Boolean isInativo() {
+		return !ativo;
+	}
 
 	public Long getCodigo() {
 		return codigo;
