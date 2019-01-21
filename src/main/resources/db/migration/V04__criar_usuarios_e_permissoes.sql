@@ -5,7 +5,7 @@ create table usuario(
 	senha varchar(150) not null
 )engine=InnoDB default charset=utf8;
 
-create table permissoe(
+create table permissao(
 	codigo bigint(20) primary key auto_increment,
 	nome varchar(50) not null
 )engine=InnoDB default charset=utf8;
