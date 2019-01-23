@@ -18,6 +18,7 @@ public class PermissaoService {
 	
 	public Permissao salvar(Permissao permissao) {
 		permissao.setNome(formaNomePermissao(permissao.getNome()));
+		repository.save(permissao);
 		return permissao;
 	}
 	
