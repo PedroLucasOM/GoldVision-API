@@ -33,7 +33,7 @@ public class Usuario {
 	private String email;
 	
 	@NotNull
-	@Size(max=20, min=5)
+	@Size(max=250)
 	private String senha;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

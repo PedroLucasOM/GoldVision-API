@@ -5,12 +5,14 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 import com.system.algamoney.model.Usuario;
 import com.system.algamoney.repository.UsuarioRepository;
 import com.system.algamoney.service.exception.UsuarioExistenteException;
 import com.system.algamoney.util.ResponseUtil;
 
+@Service
 public class UsuarioService {
 
 	@Autowired

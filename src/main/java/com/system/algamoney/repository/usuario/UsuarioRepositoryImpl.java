@@ -20,7 +20,7 @@ import com.system.algamoney.model.Usuario;
 import com.system.algamoney.model.Usuario_;
 import com.system.algamoney.repository.filter.UsuarioFilter;
 
-public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery{
+public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -67,10 +67,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryQuery{
 		Root<Usuario> root = criteria.from(Usuario.class);
 		
 		Predicate[] predicates = criarRestricoes(filter, builder, root);
-		
 		criteria.where(predicates);
 		
+		criteria.select(builder.count(root));
 		return manager.createQuery(criteria).getSingleResult();
 	}
-
 }
