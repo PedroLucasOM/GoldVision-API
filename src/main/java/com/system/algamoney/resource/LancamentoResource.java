@@ -31,6 +31,7 @@ import com.system.algamoney.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.system.algamoney.model.Lancamento;
 import com.system.algamoney.repository.LancamentoRepository;
 import com.system.algamoney.repository.filter.LancamentoFilter;
+import com.system.algamoney.repository.lancamento.projection.ResumoLancamento;
 import com.system.algamoney.service.LancamentoService;
 import com.system.algamoney.service.exception.PessoaInativaException;
 
@@ -51,9 +52,15 @@ public class LancamentoResource {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable){
 		return repository.filtrar(filter, pageable);
+	}
+	
+	@GetMapping(params = "resumir")
+	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable){
+		return repository.resumir(filter, pageable);
 	}
 	
 	@PostMapping
@@ -65,7 +72,7 @@ public class LancamentoResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Lancamento> listarPorId(@PathVariable Long codigo){
 		Lancamento lancamento = repository.findOne(codigo);
 		return lancamento != null ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build();
