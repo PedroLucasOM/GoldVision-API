@@ -11,9 +11,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.system.algamoney.config.property.AlgamoneyProperty;
+
 public class CorsFilter implements Filter{
 
-	private String originPermitida;
+	@Autowired
+	private AlgamoneyProperty property;
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -21,10 +26,10 @@ public class CorsFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		
-		resp.setHeader("Access-Control-Allow-Origin", originPermitida);
+		resp.setHeader("Access-Control-Allow-Origin", property.getOriginPermitida());
 		resp.setHeader("Access-Control-Allow-Credentials", "true");
 		
-		if("OPTIONS".equals(req.getMethod()) && originPermitida.equals(req.getHeader("Origin"))) {
+		if("OPTIONS".equals(req.getMethod()) && property.getOriginPermitida().equals(req.getHeader("Origin"))) {
 			resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
 			resp.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 			resp.setHeader("Access-Control-Max-Age", "3600");
