@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +26,7 @@ public class AppUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<Usuario> usuarioOpcional = usuarioRepository.findByEmail(email);
 		Usuario usuario = usuarioOpcional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorreto(s)"));
-		return new User(email, usuario.getSenha(), getPermissoes(usuario));
+		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 	
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
