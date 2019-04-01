@@ -1,6 +1,7 @@
 package com.system.algamoney.service;
 
 import java.text.Normalizer;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class PermissaoService {
 	@Autowired
 	private PermissaoRepository repository;
 	
+	public List<Permissao> listarTodos() {
+		return repository.findAll();
+	}
+	
 	public Permissao salvar(Permissao permissao) {
 		permissao.setNome(formaNomePermissao(permissao.getNome()));
 		repository.save(permissao);
@@ -23,12 +28,13 @@ public class PermissaoService {
 	}
 	
 	public Permissao atualizar(Permissao permissao, Long codigo) {
-		Permissao permissaoSalva = repository.findOne(codigo);
-		if(permissaoSalva == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
+		Permissao permissaoSalva = buscarPermissaoExistente(codigo);
 		BeanUtils.copyProperties(permissao, permissaoSalva, "codigo");
 		return repository.save(permissaoSalva);
+	}
+	
+	public Permissao listarPorId(Long codigo) {
+		return repository.findOne(codigo);
 	}
 	
 	public String formaNomePermissao(String nome) {
@@ -36,4 +42,16 @@ public class PermissaoService {
 		return Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 
+	public void deletar(Long codigo) {
+		repository.delete(codigo);
+		
+	}
+	
+	public Permissao buscarPermissaoExistente(Long codigo) {
+		Permissao permissaoSalva = listarPorId(codigo);
+		if(permissaoSalva == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		return permissaoSalva;
+	}
 }

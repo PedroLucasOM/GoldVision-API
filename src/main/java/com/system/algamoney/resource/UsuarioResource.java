@@ -21,16 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Usuario;
-import com.system.algamoney.repository.UsuarioRepository;
 import com.system.algamoney.repository.filter.UsuarioFilter;
 import com.system.algamoney.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioResource {
-
-	@Autowired
-	private UsuarioRepository repository;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -40,7 +36,7 @@ public class UsuarioResource {
 	
 	@GetMapping
 	public Page<Usuario> pesquisar(UsuarioFilter filter, Pageable pageable){
-		return repository.filtrar(filter, pageable);
+		return service.filtrar(filter, pageable);
 	}
 	
 	@PostMapping
@@ -52,7 +48,7 @@ public class UsuarioResource {
 	
 	@GetMapping("/{codigo}")
 	public ResponseEntity<Usuario> listarPorId(@PathVariable Long codigo){
-		Usuario usuario = repository.findOne(codigo);
+		Usuario usuario = service.listarPorId(codigo);
 		return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
 	}
 	
@@ -65,6 +61,6 @@ public class UsuarioResource {
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluir(@PathVariable Long codigo) {
-		repository.delete(codigo);
+		service.deletar(codigo);
 	}
 }

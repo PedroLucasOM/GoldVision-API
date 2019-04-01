@@ -2,12 +2,17 @@ package com.system.algamoney.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.system.algamoney.model.Lancamento;
 import com.system.algamoney.model.Pessoa;
 import com.system.algamoney.repository.LancamentoRepository;
 import com.system.algamoney.repository.PessoaRepository;
+import com.system.algamoney.repository.filter.LancamentoFilter;
+import com.system.algamoney.repository.lancamento.projection.ResumoLancamento;
 import com.system.algamoney.service.exception.PessoaInativaException;
 
 @Service
@@ -18,6 +23,14 @@ public class LancamentoService {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
+		return repository.filtrar(filter, pageable);
+	}
+	
+	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
+		return repository.resumir(filter, pageable);
+	}
 	
 	public Lancamento salvar(Lancamento lancamento) {
 		Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
@@ -49,10 +62,18 @@ public class LancamentoService {
 		}
 	}
 
+	public Lancamento listarPorId(Long codigo) {
+		return repository.findOne(codigo);
+	}
+
+	public void deletar(Long codigo) {
+		repository.delete(codigo);
+	}
+	
 	private Lancamento buscarLancamentoExistente(Long codigo) {
-		Lancamento lancamentoSalvo = repository.findOne(codigo);
-		if (lancamentoSalvo == null) {
-			throw new IllegalArgumentException();
+		Lancamento lancamentoSalvo = listarPorId(codigo);
+		if(lancamentoSalvo == null) {
+			throw new EmptyResultDataAccessException(1);
 		}
 		return lancamentoSalvo;
 	}

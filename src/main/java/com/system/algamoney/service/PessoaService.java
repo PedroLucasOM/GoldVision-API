@@ -1,5 +1,7 @@
 package com.system.algamoney.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,25 +16,40 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository repository;
 	
+	public List<Pessoa> listarTodos() {
+		return repository.findAll();
+	}
+	
+	public Pessoa salvar(Pessoa pessoa) {
+		return repository.save(pessoa);
+	}
+	
 	public Pessoa atualizar(Pessoa pessoa, Long codigo) {
-		Pessoa pessoaSalva = buscarPorId(codigo);
+		Pessoa pessoaSalva = buscarPessoaExistente(codigo);
 		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 		return pessoaSalva;
 	}
 
 	public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
-		Pessoa pessoaSalva = buscarPorId(codigo);
+		Pessoa pessoaSalva = buscarPessoaExistente(codigo);
 		pessoaSalva.setAtivo(ativo);
 		repository.save(pessoaSalva);
 		
 	}
 	
-	public Pessoa buscarPorId(Long codigo){
-		Pessoa pessoaSalva = repository.findOne(codigo);
+	public Pessoa listarPorId(Long codigo) {
+		return repository.findOne(codigo);
+	}
+	
+	public void deletar(Long codigo) {
+		repository.delete(codigo);
+	}
+	
+	public Pessoa buscarPessoaExistente(Long codigo){
+		Pessoa pessoaSalva = listarPorId(codigo);
 		if(pessoaSalva == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
 		return pessoaSalva;
 	}
-
 }

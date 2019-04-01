@@ -22,15 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Permissao;
-import com.system.algamoney.repository.PermissaoRepository;
 import com.system.algamoney.service.PermissaoService;
 
 @RestController
 @RequestMapping("/permissoes")
 public class PermissaoResource {
-
-	@Autowired
-	private PermissaoRepository repository;
 	
 	@Autowired
 	private PermissaoService service;
@@ -41,7 +37,7 @@ public class PermissaoResource {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
 	public List<Permissao> listar(){
-		return repository.findAll();
+		return service.listarTodos();
 	}
 	
 	@PostMapping
@@ -55,7 +51,7 @@ public class PermissaoResource {
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Permissao> listarPorId(@PathVariable Long codigo){
-		Permissao permissao = repository.findOne(codigo);
+		Permissao permissao = service.listarPorId(codigo);
 		return permissao != null ? ResponseEntity.ok(permissao) : ResponseEntity.notFound().build();
 	}
 	
@@ -70,6 +66,6 @@ public class PermissaoResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ROLE_DELETAR_PERMISSAO') and #oauth2.hasScope('write')")
 	public void deletar(@PathVariable Long codigo) {
-		repository.delete(codigo);
+		service.deletar(codigo);
 	}
 }

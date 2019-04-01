@@ -18,6 +18,8 @@ create table usuario_permissao(
 	foreign key(codigo_permissao) references permissao(codigo)
 )engine=InnoDB default charset=utf8;
 
+insert into usuario(nome, email, senha) values ("Administrador", "admin@gmail.com", "$2a$10$8sTy7nBtjU94Kcn9wMxIXOpefXkfYjRQbsnt7tlTZDFJRcmws1i1m");
+
 insert into permissao(nome) values 
 	("ROLE_SALVAR_CATEGORIA"),
 	("ROLE_LISTAR_CATEGORIA"),

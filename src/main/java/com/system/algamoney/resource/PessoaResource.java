@@ -22,15 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Pessoa;
-import com.system.algamoney.repository.PessoaRepository;
 import com.system.algamoney.service.PessoaService;
 
 @RestController
 @RequestMapping("/pessoas")
 public class PessoaResource {
-
-	@Autowired
-	private PessoaRepository repository;
 	
 	@Autowired
 	private PessoaService service;
@@ -41,13 +37,13 @@ public class PessoaResource {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_PESSOA') and #oauth2.hasScope('read')")
 	public List<Pessoa> listar(){
-		return repository.findAll(); 
+		return service.listarTodos(); 
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_SALVAR_PESSOA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Pessoa> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response){
-		Pessoa pessoaSalva = repository.save(pessoa);
+		Pessoa pessoaSalva = service.salvar(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
 	}
@@ -55,7 +51,7 @@ public class PessoaResource {
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_PESSOA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Pessoa> listarPorId(@PathVariable Long codigo){
-		Pessoa pessoa = repository.findOne(codigo);
+		Pessoa pessoa = service.listarPorId(codigo);
 		return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
 	
@@ -77,6 +73,6 @@ public class PessoaResource {
 	@PreAuthorize("hasAuthority('ROLE_DELETAR_PESSOA') and #oauth2.hasScope('write')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long codigo) {
-		repository.delete(codigo);
+		service.deletar(codigo);
 	}
 }

@@ -22,15 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Categoria;
-import com.system.algamoney.repository.CategoriaRepository;
 import com.system.algamoney.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
-
-	@Autowired
-	private CategoriaRepository repository;
 	
 	@Autowired
 	private CategoriaService service;
@@ -41,13 +37,13 @@ public class CategoriaResource {
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public List<Categoria> listar(){
-		return repository.findAll();
+		return service.listarTodos();
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_SALVAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
-		Categoria categoriaSalva = repository.save(categoria);
+		Categoria categoriaSalva = service.salvar(categoria);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
 	}
@@ -55,7 +51,7 @@ public class CategoriaResource {
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Categoria> listarPorId(@PathVariable Long codigo){
-		Categoria categoria = repository.findOne(codigo);
+		Categoria categoria = service.listarPorId(codigo);
 		return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
 	}
 	
@@ -70,6 +66,6 @@ public class CategoriaResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ROLE_DELETAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public void deletar(@PathVariable Long codigo) {
-		repository.delete(codigo);
+		service.deletar(codigo);
 	}
 }
