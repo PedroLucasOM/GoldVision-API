@@ -48,19 +48,19 @@ public class LancamentoResource {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable){
 		return service.filtrar(filter, pageable);
 	}
 	
 	@GetMapping(params = "resumir")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable){
 		return service.resumir(filter, pageable);
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Lancamento> salvar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
 		Lancamento lancamentoSalvo = service.salvar(lancamento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
@@ -68,21 +68,21 @@ public class LancamentoResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Lancamento> listarPorId(@PathVariable Long codigo){
 		Lancamento lancamento = service.listarPorId(codigo);
 		return lancamento != null ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ATUALIZAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Lancamento> atualizar(@Valid @RequestBody Lancamento lancamento, @PathVariable Long codigo){
 		return ResponseEntity.ok(service.atualizar(lancamento, codigo));
 	}
 	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasAuthority('ROLE_DELETAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('DELETAR_LANCAMENTO') and #oauth2.hasScope('write')")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

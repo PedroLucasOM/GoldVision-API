@@ -35,13 +35,13 @@ public class PessoaResource {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_PESSOA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_PESSOA') and #oauth2.hasScope('read')")
 	public List<Pessoa> listar(){
 		return service.listarTodos(); 
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_SALVAR_PESSOA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('SALVAR_PESSOA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Pessoa> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response){
 		Pessoa pessoaSalva = service.salvar(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
@@ -49,14 +49,14 @@ public class PessoaResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_PESSOA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_PESSOA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Pessoa> listarPorId(@PathVariable Long codigo){
 		Pessoa pessoa = service.listarPorId(codigo);
 		return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Pessoa> atualizar(@Valid @RequestBody Pessoa pessoa, @PathVariable Long codigo){
 		Pessoa pessoaSalva = service.atualizar(pessoa, codigo);
 		return ResponseEntity.ok(pessoaSalva);
@@ -64,13 +64,13 @@ public class PessoaResource {
 	
 	@PutMapping("/{codigo}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
 	public void atualizarPropriedadeAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {
 		service.atualizarPropriedadeAtivo(codigo, ativo);
 	}
 	
 	@DeleteMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_DELETAR_PESSOA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('DELETAR_PESSOA') and #oauth2.hasScope('write')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);

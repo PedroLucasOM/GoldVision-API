@@ -35,13 +35,13 @@ public class CategoriaResource {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public List<Categoria> listar(){
 		return service.listarTodos();
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_SALVAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('SALVAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
 		Categoria categoriaSalva = service.salvar(categoria);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
@@ -49,14 +49,14 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
 	public ResponseEntity<Categoria> listarPorId(@PathVariable Long codigo){
 		Categoria categoria = service.listarPorId(codigo);
 		return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ATUALIZAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public ResponseEntity<Categoria> atualizar(@Valid @RequestBody Categoria categoria, @PathVariable Long codigo){
 		Categoria categoriaSalva = service.atualizar(categoria, codigo);
 		return ResponseEntity.ok(categoriaSalva);
@@ -64,7 +64,7 @@ public class CategoriaResource {
 	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasAuthority('ROLE_DELETAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('DELETAR_CATEGORIA') and #oauth2.hasScope('write')")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

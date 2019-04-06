@@ -21,19 +21,26 @@ create table usuario_permissao(
 insert into usuario(nome, email, senha) values ("Administrador", "admin@gmail.com", "$2a$10$8sTy7nBtjU94Kcn9wMxIXOpefXkfYjRQbsnt7tlTZDFJRcmws1i1m");
 
 insert into permissao(nome) values 
-	("ROLE_SALVAR_CATEGORIA"),
-	("ROLE_LISTAR_CATEGORIA"),
-	("ROLE_ATUALIZAR_CATEGORIA"),
-	("ROLE_DELETAR_CATEGORIA"),
-	("ROLE_SALVAR_LANCAMENTO"),
-	("ROLE_LISTAR_LANCAMENTO"),
-	("ROLE_ATUALIZAR_LANCAMENTO"),
-	("ROLE_DELETAR_LANCAMENTO"),
-	("ROLE_SALVAR_PERMISSAO"),
-	("ROLE_LISTAR_PERMISSAO"),
-	("ROLE_ATUALIZAR_PERMISSAO"),
-	("ROLE_DELETAR_PERMISSAO"),
-	("ROLE_SALVAR_PESSOA"),
-	("ROLE_LISTAR_PESSOA"),
-	("ROLE_ATUALIZAR_PESSOA"),
-	("ROLE_DELETAR_PESSOA");
+	("SALVAR_CATEGORIA"),
+	("SALVAR_LANCAMENTO"),
+	("SALVAR_PERMISSAO"),
+	("SALVAR_PESSOA"),
+	("SALVAR_USUARIO"),
+	("LISTAR_CATEGORIA"),
+	("LISTAR_LANCAMENTO"),
+	("LISTAR_PERMISSAO"),
+	("LISTAR_PESSOA"),	
+	("LISTAR_USUARIO"),
+	("ATUALIZAR_CATEGORIA"),
+	("ATUALIZAR_LANCAMENTO"),
+	("ATUALIZAR_PERMISSAO"),
+	("ATUALIZAR_PESSOA"),
+	("ATUALIZAR_USUARIO"),
+	("DELETAR_CATEGORIA"),
+	("DELETAR_LANCAMENTO"),
+	("DELETAR_PERMISSAO"),
+	("DELETAR_PESSOA"),
+	("DELETAR_USUARIO");
+	
+insert into usuario_permissao(codigo_usuario, codigo_permissao) values (1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9), (1,10)
+, (1,11), (1,12), (1,13), (1,14), (1,15), (1,16), (1,17), (1,18), (1,19), (1,20);

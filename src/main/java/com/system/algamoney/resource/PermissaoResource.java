@@ -35,13 +35,13 @@ public class PermissaoResource {
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
 	public List<Permissao> listar(){
 		return service.listarTodos();
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasAuthority('ROLE_SALVAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('SALVAR_PERMISSAO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Permissao> salvar(@Valid @RequestBody Permissao permissao, HttpServletResponse response){
 		Permissao permissaoSalva = service.salvar(permissao);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, permissao.getCodigo()));
@@ -49,14 +49,14 @@ public class PermissaoResource {
 	}
 	
 	@GetMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
+	@PreAuthorize("hasAuthority('LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
 	public ResponseEntity<Permissao> listarPorId(@PathVariable Long codigo){
 		Permissao permissao = service.listarPorId(codigo);
 		return permissao != null ? ResponseEntity.ok(permissao) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_ATUALIZAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('ATUALIZAR_PERMISSAO') and #oauth2.hasScope('write')")
 	public ResponseEntity<Permissao> atualizar(@Valid @RequestBody Permissao permissao, @PathVariable Long codigo){
 		Permissao permissaoSalva = service.atualizar(permissao, codigo);
 		return ResponseEntity.ok(permissaoSalva);
@@ -64,7 +64,7 @@ public class PermissaoResource {
 	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PreAuthorize("hasAuthority('ROLE_DELETAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@PreAuthorize("hasAuthority('DELETAR_PERMISSAO') and #oauth2.hasScope('write')")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}
