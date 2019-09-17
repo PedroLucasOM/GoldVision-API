@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.system.algamoney.config.property.AlgamoneyProperty;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/tokens")
+@Api(value = "Tokens")
 public class TokenResource {
 
 	@Autowired
 	private AlgamoneyProperty property;
 	
 	@DeleteMapping("/revoke")
+	@ApiOperation(value = "Logout")
 	public void revoke(HttpServletRequest request, HttpServletResponse response) {
 		Cookie cookie = new Cookie("refreshToken", null);
 		cookie.setHttpOnly(true);

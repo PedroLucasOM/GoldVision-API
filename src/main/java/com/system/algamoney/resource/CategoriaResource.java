@@ -24,8 +24,12 @@ import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Categoria;
 import com.system.algamoney.service.CategoriaService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/categorias")
+@Api(value = "Categorias")
 public class CategoriaResource {
 	
 	@Autowired
@@ -36,12 +40,14 @@ public class CategoriaResource {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Listar todas as categorias")
 	public List<Categoria> listar(){
 		return service.listarTodos();
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('SALVAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Cadastrar uma nova categoria")
 	public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria, HttpServletResponse response){
 		Categoria categoriaSalva = service.salvar(categoria);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, categoriaSalva.getCodigo()));
@@ -50,6 +56,7 @@ public class CategoriaResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('LISTAR_CATEGORIA') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Buscar uma categoria por id")
 	public ResponseEntity<Categoria> listarPorId(@PathVariable Long codigo){
 		Categoria categoria = service.listarPorId(codigo);
 		return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
@@ -57,6 +64,7 @@ public class CategoriaResource {
 	
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ATUALIZAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Atualizar uma categoria existente")
 	public ResponseEntity<Categoria> atualizar(@Valid @RequestBody Categoria categoria, @PathVariable Long codigo){
 		Categoria categoriaSalva = service.atualizar(categoria, codigo);
 		return ResponseEntity.ok(categoriaSalva);
@@ -65,6 +73,7 @@ public class CategoriaResource {
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('DELETAR_CATEGORIA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Excluir uma categoria existente")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

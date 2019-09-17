@@ -24,8 +24,12 @@ import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Pessoa;
 import com.system.algamoney.service.PessoaService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/pessoas")
+@Api(value = "Pessoas")
 public class PessoaResource {
 	
 	@Autowired
@@ -36,12 +40,14 @@ public class PessoaResource {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('LISTAR_PESSOA') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Listar todas as pessoas")
 	public List<Pessoa> listar(){
 		return service.listarTodos(); 
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('SALVAR_PESSOA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Cadastrar uma nova pessoa")
 	public ResponseEntity<Pessoa> salvar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response){
 		Pessoa pessoaSalva = service.salvar(pessoa);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
@@ -50,6 +56,7 @@ public class PessoaResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('LISTAR_PESSOA') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Buscar uma pessoa por id")
 	public ResponseEntity<Pessoa> listarPorId(@PathVariable Long codigo){
 		Pessoa pessoa = service.listarPorId(codigo);
 		return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
@@ -57,6 +64,7 @@ public class PessoaResource {
 	
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Atualizar uma pessoa existente")
 	public ResponseEntity<Pessoa> atualizar(@Valid @RequestBody Pessoa pessoa, @PathVariable Long codigo){
 		Pessoa pessoaSalva = service.atualizar(pessoa, codigo);
 		return ResponseEntity.ok(pessoaSalva);
@@ -65,6 +73,7 @@ public class PessoaResource {
 	@PutMapping("/{codigo}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ATUALIZAR_PESSOA') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Atualizar propriedade ativo de pessoa")
 	public void atualizarPropriedadeAtivo(@PathVariable Long codigo, @RequestBody Boolean ativo) {
 		service.atualizarPropriedadeAtivo(codigo, ativo);
 	}
@@ -72,6 +81,7 @@ public class PessoaResource {
 	@DeleteMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('DELETAR_PESSOA') and #oauth2.hasScope('write')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ApiOperation(value = "Excluir uma pessoa existente")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

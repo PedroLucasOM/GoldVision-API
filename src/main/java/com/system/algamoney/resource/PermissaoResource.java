@@ -24,8 +24,12 @@ import com.system.algamoney.event.RecursoCriadoEvent;
 import com.system.algamoney.model.Permissao;
 import com.system.algamoney.service.PermissaoService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/permissoes")
+@Api(value = "Permissões")
 public class PermissaoResource {
 	
 	@Autowired
@@ -36,12 +40,14 @@ public class PermissaoResource {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Listar todas as permissões")
 	public List<Permissao> listar(){
 		return service.listarTodos();
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('SALVAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Cadastrar uma nova permissão")
 	public ResponseEntity<Permissao> salvar(@Valid @RequestBody Permissao permissao, HttpServletResponse response){
 		Permissao permissaoSalva = service.salvar(permissao);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, permissao.getCodigo()));
@@ -50,6 +56,7 @@ public class PermissaoResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('LISTAR_PERMISSAO') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Buscar uma permissão por id")
 	public ResponseEntity<Permissao> listarPorId(@PathVariable Long codigo){
 		Permissao permissao = service.listarPorId(codigo);
 		return permissao != null ? ResponseEntity.ok(permissao) : ResponseEntity.notFound().build();
@@ -57,6 +64,7 @@ public class PermissaoResource {
 	
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ATUALIZAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Atualizar uma permissão existente")
 	public ResponseEntity<Permissao> atualizar(@Valid @RequestBody Permissao permissao, @PathVariable Long codigo){
 		Permissao permissaoSalva = service.atualizar(permissao, codigo);
 		return ResponseEntity.ok(permissaoSalva);
@@ -65,6 +73,7 @@ public class PermissaoResource {
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('DELETAR_PERMISSAO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Excluir uma permissão existente")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

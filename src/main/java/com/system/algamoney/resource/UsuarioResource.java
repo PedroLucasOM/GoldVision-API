@@ -25,8 +25,12 @@ import com.system.algamoney.model.Usuario;
 import com.system.algamoney.repository.filter.UsuarioFilter;
 import com.system.algamoney.service.UsuarioService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/usuarios")
+@Api(value = "Usuários")
 public class UsuarioResource {
 	
 	@Autowired
@@ -36,11 +40,13 @@ public class UsuarioResource {
 	private UsuarioService service;
 	
 	@GetMapping
+	@ApiOperation(value = "Filtrar usuários")
 	public Page<Usuario> pesquisar(UsuarioFilter filter, Pageable pageable){
 		return service.filtrar(filter, pageable);
 	}
 	
 	@PostMapping
+	@ApiOperation(value = "Cadastrar um novo usuário")
 	public ResponseEntity<Usuario> salvar(@Valid @RequestBody Usuario usuario, HttpServletResponse response){
 		Usuario usuarioSalvo = service.salvar(usuario);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, usuario.getCodigo()));
@@ -48,12 +54,14 @@ public class UsuarioResource {
 	}
 	
 	@GetMapping("/{codigo}")
+	@ApiOperation(value = "Buscar um usuário por id")
 	public ResponseEntity<Usuario> listarPorId(@PathVariable Long codigo){
 		Usuario usuario = service.listarPorId(codigo);
 		return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{codigo}")
+	@ApiOperation(value = "Atualizar um usuário existente")
 	public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario usuario, @PathVariable Long codigo){
 		Usuario usuarioSalvo = service.atualizar(usuario, codigo);
 		return ResponseEntity.ok(usuarioSalvo);
@@ -62,6 +70,7 @@ public class UsuarioResource {
 	@DeleteMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('DELETAR_USUARIO') and #oauth2.hasScope('write')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ApiOperation(value = "Excluir um usuário existente")
 	public void excluir(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}

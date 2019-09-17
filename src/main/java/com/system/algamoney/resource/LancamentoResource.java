@@ -34,8 +34,12 @@ import com.system.algamoney.repository.lancamento.projection.ResumoLancamento;
 import com.system.algamoney.service.LancamentoService;
 import com.system.algamoney.service.exception.PessoaInativaException;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/lancamentos")
+@Api(value = "Lançamentos")
 public class LancamentoResource {
 	
 	@Autowired
@@ -49,18 +53,21 @@ public class LancamentoResource {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Filtrar lançamentos")
 	public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable){
 		return service.filtrar(filter, pageable);
 	}
 	
 	@GetMapping(params = "resumir")
 	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Resumir listagem de lançamentos")
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable){
 		return service.resumir(filter, pageable);
 	}
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Cadastrar um novo lançamento")
 	public ResponseEntity<Lancamento> salvar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response){
 		Lancamento lancamentoSalvo = service.salvar(lancamento);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, lancamentoSalvo.getCodigo()));
@@ -69,6 +76,7 @@ public class LancamentoResource {
 	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	@ApiOperation(value = "Buscar um lançamento por id")
 	public ResponseEntity<Lancamento> listarPorId(@PathVariable Long codigo){
 		Lancamento lancamento = service.listarPorId(codigo);
 		return lancamento != null ? ResponseEntity.ok(lancamento) : ResponseEntity.notFound().build();
@@ -76,6 +84,7 @@ public class LancamentoResource {
 	
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ATUALIZAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Atualizar um lançamento existente")
 	public ResponseEntity<Lancamento> atualizar(@Valid @RequestBody Lancamento lancamento, @PathVariable Long codigo){
 		return ResponseEntity.ok(service.atualizar(lancamento, codigo));
 	}
@@ -83,6 +92,7 @@ public class LancamentoResource {
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('DELETAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	@ApiOperation(value = "Excluir um lançamento existente")
 	public void deletar(@PathVariable Long codigo) {
 		service.deletar(codigo);
 	}
