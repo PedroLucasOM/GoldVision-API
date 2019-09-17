@@ -28,7 +28,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public Docket greetingApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.petsplace")).build()
+				.apis(RequestHandlerSelectors.basePackage("com.system.algamoney")).build()
 				.securitySchemes(Lists.newArrayList(apiKey())).securityContexts(Lists.newArrayList(securityContext()))
 				.apiInfo(metaData());
 
@@ -51,7 +51,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	}
 
 	private ApiInfo metaData() {
-		return new ApiInfoBuilder().title("Petsplace API").description("\"Documentação da API Petsplace\"")
+		return new ApiInfoBuilder().title("GoldVision API").description("\"Documentação da API GoldVision\"")
 				.version("1.0.0").license("Apache License Version 2.0")
 				.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"").build();
 	}
