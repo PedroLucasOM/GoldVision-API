@@ -8,10 +8,10 @@ import com.system.algamoney.config.property.AlgamoneyProperty;
 
 @SpringBootApplication
 @EnableConfigurationProperties(AlgamoneyProperty.class)
-public class AlgamoneyapiApplication {
+public class GoldVisionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AlgamoneyapiApplication.class, args);
+		SpringApplication.run(GoldVisionApplication.class, args);
 	}
 
 }
