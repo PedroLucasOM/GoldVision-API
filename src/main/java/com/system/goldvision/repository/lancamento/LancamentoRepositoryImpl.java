@@ -75,7 +75,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		}
 		
 		if(filter.getDataVencimentoDe() != null) {
-			predicates.add(builder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), filter.getDataVencimentoDe()));
+			predicates.add(builder.greaterThan(root.get(Lancamento_.dataVencimento), filter.getDataVencimentoDe()));
 		}
 		
 		if(filter.getDataVencimentoAte() != null) {
