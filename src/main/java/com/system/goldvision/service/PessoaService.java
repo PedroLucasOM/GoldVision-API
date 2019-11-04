@@ -1,14 +1,15 @@
 package com.system.goldvision.service;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.system.goldvision.model.Pessoa;
 import com.system.goldvision.repository.PessoaRepository;
+import com.system.goldvision.repository.filter.PessoaFilter;
 
 @Service
 public class PessoaService {
@@ -16,8 +17,8 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository repository;
 	
-	public List<Pessoa> listarTodos() {
-		return repository.findAll();
+	public Page<Pessoa> filtrar(PessoaFilter filter, Pageable pageable) {
+		return repository.filtrar(filter, pageable);
 	}
 	
 	public Pessoa salvar(Pessoa pessoa) {
