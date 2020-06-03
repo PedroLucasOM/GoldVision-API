@@ -1,12 +1,11 @@
 package com.system.goldvision.repository.usuario;
 
+import com.system.goldvision.model.Usuario;
+import com.system.goldvision.repository.filter.UsuarioFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.system.goldvision.model.Usuario;
-import com.system.goldvision.repository.filter.UsuarioFilter;
-
 public interface UsuarioRepositoryQuery {
 
-	public Page<Usuario> filtrar(UsuarioFilter filter, Pageable pageable);
+    Page<Usuario> filtrar(UsuarioFilter filter, Pageable pageable);
 }

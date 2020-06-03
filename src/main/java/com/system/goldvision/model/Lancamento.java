@@ -1,157 +1,144 @@
 package com.system.goldvision.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "lancamento")
 public class Lancamento {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
-	
-	@NotNull
-	@Size(max=30)
-	private String descricao;
-	
-	@NotNull
-	@Column(name = "data_vencimento")
-	@JsonFormat(pattern = "dd-MM-yyyy")
-	private LocalDate dataVencimento;
-	
-	@Column(name = "data_pagamento")
-	private LocalDate dataPagamento;
-	
-	@NotNull
-	private BigDecimal valor;
-	
-	@Size(max=100)
-	private String observacao;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private TipoLancamento tipo;
-	
-	@ManyToOne
-	@JoinColumn(name = "codigo_categoria")
-	private Categoria categoria;
-	
-	@ManyToOne
-	@JoinColumn(name = "codigo_pessoa")
-	private Pessoa pessoa;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codigo;
 
-	public Long getCodigo() {
-		return codigo;
-	}
+    @NotNull
+    @Size(max = 30)
+    private String descricao;
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
+    @NotNull
+    @Column(name = "data_vencimento")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate dataVencimento;
 
-	public String getDescricao() {
-		return descricao;
-	}
+    @Column(name = "data_pagamento")
+    private LocalDate dataPagamento;
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    @NotNull
+    private BigDecimal valor;
 
-	public LocalDate getDataVencimento() {
-		return dataVencimento;
-	}
+    @Size(max = 100)
+    private String observacao;
 
-	public void setDataVencimento(LocalDate dataVencimento) {
-		this.dataVencimento = dataVencimento;
-	}
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private TipoLancamento tipo;
 
-	public LocalDate getDataPagamento() {
-		return dataPagamento;
-	}
+    @ManyToOne
+    @JoinColumn(name = "codigo_categoria")
+    private Categoria categoria;
 
-	public void setDataPagamento(LocalDate dataPagamento) {
-		this.dataPagamento = dataPagamento;
-	}
+    @ManyToOne
+    @JoinColumn(name = "codigo_pessoa")
+    private Pessoa pessoa;
 
-	public BigDecimal getValor() {
-		return valor;
-	}
+    public Long getCodigo() {
+        return codigo;
+    }
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
 
-	public String getObservacao() {
-		return observacao;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public TipoLancamento getTipo() {
-		return tipo;
-	}
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
 
-	public void setTipo(TipoLancamento tipo) {
-		this.tipo = tipo;
-	}
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
 
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
+    public BigDecimal getValor() {
+        return valor;
+    }
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		return result;
-	}
+    public String getObservacao() {
+        return observacao;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Lancamento other = (Lancamento) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
-			return false;
-		return true;
-	}
-	
-	
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public TipoLancamento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoLancamento tipo) {
+        this.tipo = tipo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Lancamento other = (Lancamento) obj;
+        if (codigo == null) {
+            return other.codigo == null;
+        } else return codigo.equals(other.codigo);
+    }
+
+
 }

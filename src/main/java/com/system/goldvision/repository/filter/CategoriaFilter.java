@@ -1,6 +1,6 @@
 package com.system.goldvision.repository.filter;
 
-public class PessoaFilter {
+public class CategoriaFilter {
 
     private String nome;
 
