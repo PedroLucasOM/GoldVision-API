@@ -27,7 +27,7 @@ public class PessoaService {
     public Pessoa atualizar(Pessoa pessoa, Long codigo) {
         Pessoa pessoaSalva = buscarPessoaExistente(codigo);
         BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
-        return pessoaSalva;
+        return repository.save(pessoaSalva);
     }
 
     public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {

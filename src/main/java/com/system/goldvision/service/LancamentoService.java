@@ -41,22 +41,15 @@ public class LancamentoService {
 
     public Lancamento atualizar(Lancamento lancamento, Long codigo) {
         Lancamento lancamentoSalvo = buscarLancamentoExistente(codigo);
-
-        if (!lancamentoSalvo.getPessoa().equals(lancamento.getPessoa())) {
-            validarPessoa(lancamento);
-        }
+        validarPessoa(lancamento);
 
         BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
         return repository.save(lancamentoSalvo);
     }
 
     public void validarPessoa(Lancamento lancamento) {
-        Pessoa pessoa = null;
-        if (lancamento.getPessoa().getCodigo() != null) {
-            pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
-        }
-
-        if (pessoa.isInativo()) {
+        Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+        if (pessoa != null & pessoa.isInativo()) {
             throw new PessoaInativaException();
         }
     }

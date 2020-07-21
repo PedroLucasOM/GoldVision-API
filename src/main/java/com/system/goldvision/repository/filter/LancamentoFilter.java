@@ -7,9 +7,9 @@ import java.time.LocalDate;
 public class LancamentoFilter {
 
     private String descricao;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVencimentoDe;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataVencimentoAte;
 
     public String getDescricao() {
