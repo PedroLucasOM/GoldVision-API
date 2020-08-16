@@ -80,7 +80,7 @@ public class AlgamoneyExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({UsuarioExistenteException.class})
     public ResponseEntity<Object> handleUsuarioExistenteException(UsuarioExistenteException ex) {
-        String mensagemUsuario = messageSource.getMessage("recurso.existente", null, LocaleContextHolder.getLocale());
+        String mensagemUsuario = messageSource.getMessage("usuario.existente", null, LocaleContextHolder.getLocale());
         String mensagemDesenvolvedor = ex.toString();
         List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
         return ResponseEntity.badRequest().body(erros);

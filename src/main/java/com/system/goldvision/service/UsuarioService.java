@@ -27,7 +27,7 @@ public class UsuarioService {
         return repository.filtrar(filter, pageable);
     }
 
-    public Usuario salvar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) throws UsuarioExistenteException {
         Optional<Usuario> usuarioOpcional = repository.findByEmail(usuario.getEmail());
         if (usuarioOpcional.isPresent()) {
             throw new UsuarioExistenteException();
@@ -42,7 +42,10 @@ public class UsuarioService {
         if (usuarioSalvo == null) {
             throw new EmptyResultDataAccessException(1);
         }
-        BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo");
+        if (!usuario.getSenha().equals(usuarioSalvo.getSenha())) {
+            usuarioSalvo.setSenha(util.gerarSenhaCriptografada(usuario.getSenha()));
+        }
+        BeanUtils.copyProperties(usuario, usuarioSalvo, "codigo", "senha");
         return repository.save(usuarioSalvo);
     }
 
@@ -52,7 +55,6 @@ public class UsuarioService {
 
     public void deletar(Long codigo) {
         repository.delete(codigo);
-
     }
 
     public Usuario buscarUsuarioExistente(Long codigo) {

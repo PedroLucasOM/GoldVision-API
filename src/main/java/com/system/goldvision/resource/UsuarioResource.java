@@ -30,12 +30,14 @@ public class UsuarioResource {
     private UsuarioService service;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('LISTAR_USUARIO') and #oauth2.hasScope('read')")
     @ApiOperation(value = "Filtrar usuários")
     public Page<Usuario> pesquisar(UsuarioFilter filter, Pageable pageable) {
         return service.filtrar(filter, pageable);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SALVAR_USUARIO') and #oauth2.hasScope('write')")
     @ApiOperation(value = "Cadastrar um novo usuário")
     public ResponseEntity<Usuario> salvar(@Valid @RequestBody Usuario usuario, HttpServletResponse response) {
         Usuario usuarioSalvo = service.salvar(usuario);
@@ -44,6 +46,7 @@ public class UsuarioResource {
     }
 
     @GetMapping("/{codigo}")
+    @PreAuthorize("hasAuthority('LISTAR_USUARIO') and #oauth2.hasScope('read')")
     @ApiOperation(value = "Buscar um usuário por id")
     public ResponseEntity<Usuario> listarPorId(@PathVariable Long codigo) {
         Usuario usuario = service.listarPorId(codigo);
@@ -51,6 +54,7 @@ public class UsuarioResource {
     }
 
     @PutMapping("/{codigo}")
+    @PreAuthorize("hasAuthority('ATUALIZAR_USUARIO') and #oauth2.hasScope('write')")
     @ApiOperation(value = "Atualizar um usuário existente")
     public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario usuario, @PathVariable Long codigo) {
         Usuario usuarioSalvo = service.atualizar(usuario, codigo);
