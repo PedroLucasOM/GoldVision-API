@@ -1,5 +1,6 @@
 package com.system.goldvision.service;
 
+import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.model.Pessoa;
 import com.system.goldvision.repository.LancamentoRepository;
@@ -13,6 +14,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class LancamentoService {
@@ -29,6 +33,10 @@ public class LancamentoService {
 
     public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
         return repository.resumir(filter, pageable);
+    }
+
+    public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria() {
+        return this.repository.buscarComAgrupamentoPorCategoria(LocalDate.now());
     }
 
     public Lancamento salvar(Lancamento lancamento) {

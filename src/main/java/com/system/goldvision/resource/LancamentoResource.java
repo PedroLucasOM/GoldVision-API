@@ -1,5 +1,6 @@
 package com.system.goldvision.resource;
 
+import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.event.RecursoCriadoEvent;
 import com.system.goldvision.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.system.goldvision.model.Lancamento;
@@ -51,6 +52,13 @@ public class LancamentoResource {
     @ApiOperation(value = "Resumir listagem de lançamentos")
     public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
         return service.resumir(filter, pageable);
+    }
+
+    @GetMapping("/estatistica/por-categoria")
+    @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    @ApiOperation(value="Retornar dados estatísticos agrupados por categoria do mês atual")
+    public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria() {
+        return service.buscarComAgrupamentoPorCategoria();
     }
 
     @PostMapping
