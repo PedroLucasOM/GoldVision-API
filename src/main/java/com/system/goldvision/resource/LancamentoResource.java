@@ -1,6 +1,7 @@
 package com.system.goldvision.resource;
 
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
+import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.event.RecursoCriadoEvent;
 import com.system.goldvision.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.system.goldvision.model.Lancamento;
@@ -59,6 +60,13 @@ public class LancamentoResource {
     @ApiOperation(value="Retornar dados estatísticos agrupados por categoria do mês atual")
     public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria() {
         return service.buscarComAgrupamentoPorCategoria();
+    }
+
+    @GetMapping("/estatistica/por-dia")
+    @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    @ApiOperation(value="Retornar dados estatísticos agrupados por tipo de lançamento e dia de vencimento do mês atual")
+    public List<LancamentoEstatisticaDia> buscarComAgrupamentoPorDia() {
+        return service.buscarComAgrupamentoPorDia();
     }
 
     @PostMapping

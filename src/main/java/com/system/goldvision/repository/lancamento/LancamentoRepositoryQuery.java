@@ -1,6 +1,7 @@
 package com.system.goldvision.repository.lancamento;
 
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
+import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.repository.filter.LancamentoFilter;
 import com.system.goldvision.repository.lancamento.projection.ResumoLancamento;
@@ -13,6 +14,8 @@ import java.util.List;
 public interface LancamentoRepositoryQuery {
 
     List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria(LocalDate mesReferencia);
+
+    List<LancamentoEstatisticaDia> buscarComAgrupamentoPorDia(LocalDate mesReferencia);
 
     Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable);
 

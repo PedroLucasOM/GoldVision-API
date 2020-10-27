@@ -1,6 +1,7 @@
 package com.system.goldvision.service;
 
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
+import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.model.Pessoa;
 import com.system.goldvision.repository.LancamentoRepository;
@@ -37,6 +38,10 @@ public class LancamentoService {
 
     public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria() {
         return this.repository.buscarComAgrupamentoPorCategoria(LocalDate.now());
+    }
+
+    public List<LancamentoEstatisticaDia> buscarComAgrupamentoPorDia() {
+        return this.repository.buscarComAgrupamentoPorDia(LocalDate.now());
     }
 
     public Lancamento salvar(Lancamento lancamento) {

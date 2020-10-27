@@ -1,6 +1,7 @@
 package com.system.goldvision.repository.lancamento;
 
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
+import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.model.Categoria_;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.model.Lancamento_;
@@ -55,6 +56,36 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         criteriaQuery.groupBy(root.get(Lancamento_.categoria));
 
         TypedQuery<LancamentoEstatisticaCategoria> typedQuery = manager.createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public List<LancamentoEstatisticaDia> buscarComAgrupamentoPorDia(LocalDate mesReferencia) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<LancamentoEstatisticaDia> criteriaQuery = criteriaBuilder
+                .createQuery(LancamentoEstatisticaDia.class);
+
+        Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(LancamentoEstatisticaDia.class,
+                root.get(Lancamento_.tipo),
+                root.get(Lancamento_.dataVencimento),
+                criteriaBuilder.sum(root.get(Lancamento_.valor))));
+
+        LocalDate primeiroDiaMes = mesReferencia.withDayOfMonth(1);
+        LocalDate ultimoDiaMes = mesReferencia.withDayOfMonth(mesReferencia.lengthOfMonth());
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), primeiroDiaMes));
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), ultimoDiaMes));
+
+        criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
+
+        criteriaQuery.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.dataVencimento));
+
+        TypedQuery<LancamentoEstatisticaDia> typedQuery = manager.createQuery(criteriaQuery);
 
         return typedQuery.getResultList();
     }
