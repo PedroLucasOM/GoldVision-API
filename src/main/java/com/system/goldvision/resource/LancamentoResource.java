@@ -11,19 +11,25 @@ import com.system.goldvision.service.LancamentoService;
 import com.system.goldvision.service.exception.PessoaInativaException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,16 +61,28 @@ public class LancamentoResource {
         return service.resumir(filter, pageable);
     }
 
+    @GetMapping("/relatorios/por-pessoa")
+    @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    @ApiOperation(value = "Retornar relatório com dados estatísticos agrupados por tipo de lançamento e pessoa")
+    public ResponseEntity<byte[]> buscarComAgrupamentoPorPessoa(
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate inicio,
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate fim
+    ) throws JRException {
+        byte[] dadosDoRelatorio = service.gerarBytesDoRelatorio(inicio, fim);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                .body(dadosDoRelatorio);
+    }
+
     @GetMapping("/estatistica/por-categoria")
     @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    @ApiOperation(value="Retornar dados estatísticos agrupados por categoria do mês atual")
+    @ApiOperation(value = "Retornar dados estatísticos agrupados por categoria do mês atual")
     public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria() {
         return service.buscarComAgrupamentoPorCategoria();
     }
 
     @GetMapping("/estatistica/por-dia")
     @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
-    @ApiOperation(value="Retornar dados estatísticos agrupados por tipo de lançamento e dia de vencimento do mês atual")
+    @ApiOperation(value = "Retornar dados estatísticos agrupados por tipo de lançamento e dia de vencimento do mês atual")
     public List<LancamentoEstatisticaDia> buscarComAgrupamentoPorDia() {
         return service.buscarComAgrupamentoPorDia();
     }

@@ -2,6 +2,7 @@ package com.system.goldvision.repository.lancamento;
 
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.dto.LancamentoEstatisticaDia;
+import com.system.goldvision.dto.LancamentoEstatisticaPessoa;
 import com.system.goldvision.model.Categoria_;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.model.Lancamento_;
@@ -9,7 +10,6 @@ import com.system.goldvision.model.Pessoa_;
 import com.system.goldvision.repository.filter.LancamentoFilter;
 import com.system.goldvision.repository.lancamento.projection.ResumoLancamento;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,33 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
+
+    @Override
+    public List<LancamentoEstatisticaPessoa> buscarComAgrupamentoPorPessoa(LocalDate inicio, LocalDate fim) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+        CriteriaQuery<LancamentoEstatisticaPessoa> criteriaQuery = criteriaBuilder
+                .createQuery(LancamentoEstatisticaPessoa.class);
+
+        Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(LancamentoEstatisticaPessoa.class,
+                root.get(Lancamento_.tipo),
+                root.get(Lancamento_.pessoa),
+                criteriaBuilder.sum(root.get(Lancamento_.valor))));
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), inicio));
+        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), fim));
+
+        criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
+
+        criteriaQuery.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.pessoa));
+
+        TypedQuery<LancamentoEstatisticaPessoa> typedQuery = manager.createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
 
     @Override
     public List<LancamentoEstatisticaCategoria> buscarComAgrupamentoPorCategoria(LocalDate mesReferencia) {
