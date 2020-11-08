@@ -3,10 +3,13 @@ package com.system.goldvision.service;
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.dto.LancamentoEstatisticaPessoa;
+import com.system.goldvision.mail.Mailer;
 import com.system.goldvision.model.Lancamento;
 import com.system.goldvision.model.Pessoa;
+import com.system.goldvision.model.Usuario;
 import com.system.goldvision.repository.LancamentoRepository;
 import com.system.goldvision.repository.PessoaRepository;
+import com.system.goldvision.repository.UsuarioRepository;
 import com.system.goldvision.repository.filter.LancamentoFilter;
 import com.system.goldvision.repository.lancamento.projection.ResumoLancamento;
 import com.system.goldvision.service.exception.PessoaInativaException;
@@ -15,11 +18,14 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -33,11 +39,16 @@ import java.util.Map;
 @Service
 public class LancamentoService {
 
+    private static final Logger logger = LoggerFactory.getLogger(LancamentoService.class);
+    private static final String DESTINATARIOS = "LISTAR_LANCAMENTO";
     @Autowired
     private LancamentoRepository repository;
-
     @Autowired
     private PessoaRepository pessoaRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private Mailer mailer;
 
     public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
         return repository.filtrar(filter, pageable);
@@ -107,5 +118,38 @@ public class LancamentoService {
             throw new EmptyResultDataAccessException(1);
         }
         return lancamentoSalvo;
+    }
+
+    @Scheduled(cron = "0 50 4 * * *")
+    public void avisarSobreLancamentosVencidos() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Preparando envio de "
+                    + "e-mails de aviso de lançamentos vencidos.");
+        }
+
+        List<Lancamento> vencidos = repository
+                .findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+
+        if (vencidos.isEmpty()) {
+            logger.info("Sem lançamentos vencidos para aviso.");
+
+            return;
+        }
+
+        logger.info("Exitem {} lançamentos vencidos.", vencidos.size());
+
+        List<Usuario> destinatarios = usuarioRepository
+                .findByPermissoesNome(DESTINATARIOS);
+
+        if (destinatarios.isEmpty()) {
+            logger.warn("Existem lançamentos vencidos, mas o "
+                    + "sistema não encontrou destinatários.");
+
+            return;
+        }
+
+        mailer.avisarSobreLancamentosVencidos(vencidos, destinatarios);
+
+        logger.info("Envio de e-mail de aviso concluído.");
     }
 }
