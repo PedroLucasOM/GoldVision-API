@@ -1,11 +1,14 @@
 package com.system.goldvision.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.beans.Transient;
+import java.util.List;
 
 @Entity
 @Table(name = "pessoa")
@@ -24,6 +27,12 @@ public class Pessoa {
 
     @NotNull
     private Boolean ativo;
+
+    @JsonIgnoreProperties("pessoa")
+    @Valid
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Contato> contatos;
 
     @Transient
     @JsonIgnore
@@ -61,6 +70,14 @@ public class Pessoa {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(List<Contato> contatos) {
+        this.contatos = contatos;
     }
 
     @Override
