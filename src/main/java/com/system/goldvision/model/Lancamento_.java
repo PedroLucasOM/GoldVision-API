@@ -1,4 +1,9 @@
-package com.system.goldvision.model;
+package com.system.goldvision.model.metamodel;
+
+import com.system.goldvision.model.Categoria;
+import com.system.goldvision.model.Lancamento;
+import com.system.goldvision.model.Pessoa;
+import com.system.goldvision.model.TipoLancamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

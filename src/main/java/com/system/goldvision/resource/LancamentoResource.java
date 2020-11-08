@@ -25,9 +25,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +49,17 @@ public class LancamentoResource {
 
     @Autowired
     private ApplicationEventPublisher publisher;
+
+    @PostMapping("/anexo")
+    @PreAuthorize("hasAuthority('SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
+    @ApiOperation(value = "Fazer upload de anexo")
+    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+        OutputStream out = new FileOutputStream(
+                System.getProperty("user.dir").concat("/anexo--").concat(anexo.getOriginalFilename()));
+        out.write(anexo.getBytes());
+        out.close();
+        return "ok";
+    }
 
     @GetMapping
     @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")

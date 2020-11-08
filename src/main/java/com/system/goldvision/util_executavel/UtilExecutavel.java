@@ -9,6 +9,8 @@ public class UtilExecutavel {
         String password = "admin";
         System.out.println(util.gerarSenhaCriptografada(password));
 
+        String userDirectory = System.getProperty("user.dir");
+        System.out.println(userDirectory);
     }
 
 }

@@ -1,4 +1,6 @@
-package com.system.goldvision.model;
+package com.system.goldvision.model.metamodel;
+
+import com.system.goldvision.model.Categoria;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

@@ -1,4 +1,7 @@
-package com.system.goldvision.model;
+package com.system.goldvision.model.metamodel;
+
+import com.system.goldvision.model.Permissao;
+import com.system.goldvision.model.Usuario;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
