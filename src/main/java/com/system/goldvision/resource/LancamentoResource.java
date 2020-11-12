@@ -9,6 +9,7 @@ import com.system.goldvision.repository.filter.LancamentoFilter;
 import com.system.goldvision.repository.lancamento.projection.ResumoLancamento;
 import com.system.goldvision.service.LancamentoService;
 import com.system.goldvision.service.exception.PessoaInativaException;
+import com.system.goldvision.storage.GoogleCloudStorage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.sf.jasperreports.engine.JRException;
@@ -29,9 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -50,14 +49,14 @@ public class LancamentoResource {
     @Autowired
     private ApplicationEventPublisher publisher;
 
+    @Autowired
+    private GoogleCloudStorage googleCloudStorage;
+
     @PostMapping("/anexo")
     @PreAuthorize("hasAuthority('SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
     @ApiOperation(value = "Fazer upload de anexo")
     public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-        OutputStream out = new FileOutputStream(
-                System.getProperty("user.dir").concat("/anexo--").concat(anexo.getOriginalFilename()));
-        out.write(anexo.getBytes());
-        out.close();
+        this.googleCloudStorage.salvar(anexo.getOriginalFilename(), anexo.getBytes(), true);
         return "ok";
     }
 
