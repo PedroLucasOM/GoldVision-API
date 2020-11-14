@@ -1,5 +1,6 @@
 package com.system.goldvision.service;
 
+import com.google.cloud.storage.Blob;
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.dto.LancamentoEstatisticaPessoa;
@@ -32,6 +33,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -149,7 +151,7 @@ public class LancamentoService {
         return lancamentoSalvo;
     }
 
-    @Scheduled(cron = "0 50 4 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void avisarSobreLancamentosVencidos() {
         if (logger.isDebugEnabled()) {
             logger.debug("Preparando envio de "
@@ -180,5 +182,25 @@ public class LancamentoService {
         mailer.avisarSobreLancamentosVencidos(vencidos, destinatarios);
 
         logger.info("Envio de e-mail de aviso concluído.");
+    }
+
+    @Scheduled(cron = "0 0 1 * * *")
+    public void excluirArquivosInuteis() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Iterable<Blob> arquivos = this.googleCloudStorage.buscarArquivosInuteis().iterateAll();
+
+        arquivos.forEach(blob -> {
+            Long diffMills = timestamp.getTime() - blob.getCreateTime();
+            Long diffDays = diffMills / (1000  * 60 * 60 * 24);
+
+            if (diffDays >= 1) {
+                try {
+                    this.googleCloudStorage.remover(blob.getName());
+                    logger.info("Exclusão de arquivo {} feita com sucesso!", blob.getName());
+                } catch (Exception ex) {
+                    logger.error("Não foi possível excluir o arquivo {}.", blob.getName());
+                }
+            }
+        });
     }
 }

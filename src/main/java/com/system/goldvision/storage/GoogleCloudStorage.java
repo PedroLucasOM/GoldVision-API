@@ -1,5 +1,6 @@
 package com.system.goldvision.storage;
 
+import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Bucket;
@@ -72,6 +73,10 @@ public class GoogleCloudStorage {
         this.criar(anexoNovo, bytes);
 
         return anexoNovo;
+    }
+
+    public Page<Blob> buscarArquivosInuteis() {
+        return this.bucket.list(Storage.BlobListOption.prefix(property.getStorageConfig().getTempFilePrefix()));
     }
 
     public String configurarUrl(String anexo) {
