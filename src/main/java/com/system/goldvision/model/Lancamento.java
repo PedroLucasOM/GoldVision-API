@@ -2,6 +2,7 @@ package com.system.goldvision.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.system.goldvision.repository.lancamento.listener.LancamentoAnexoListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@EntityListeners(LancamentoAnexoListener.class)
 @Entity
 @Table(name = "lancamento")
 public class Lancamento {
@@ -48,7 +50,7 @@ public class Lancamento {
     @JoinColumn(name = "codigo_pessoa")
     private Pessoa pessoa;
 
-    @Size(max=200)
+    @Size(max = 200)
     private String anexo;
 
     @Transient

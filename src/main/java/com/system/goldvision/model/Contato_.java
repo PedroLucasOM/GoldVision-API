@@ -11,17 +11,16 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Contato.class)
 public abstract class Contato_ {
 
-	public static volatile SingularAttribute<Contato, Long> codigo;
-	public static volatile SingularAttribute<Contato, String> telefone;
-	public static volatile SingularAttribute<Contato, Pessoa> pessoa;
-	public static volatile SingularAttribute<Contato, String> nome;
-	public static volatile SingularAttribute<Contato, String> email;
-
-	public static final String CODIGO = "codigo";
-	public static final String TELEFONE = "telefone";
-	public static final String PESSOA = "pessoa";
-	public static final String NOME = "nome";
-	public static final String EMAIL = "email";
+    public static final String CODIGO = "codigo";
+    public static final String TELEFONE = "telefone";
+    public static final String PESSOA = "pessoa";
+    public static final String NOME = "nome";
+    public static final String EMAIL = "email";
+    public static volatile SingularAttribute<Contato, Long> codigo;
+    public static volatile SingularAttribute<Contato, String> telefone;
+    public static volatile SingularAttribute<Contato, Pessoa> pessoa;
+    public static volatile SingularAttribute<Contato, String> nome;
+    public static volatile SingularAttribute<Contato, String> email;
 
 }
 

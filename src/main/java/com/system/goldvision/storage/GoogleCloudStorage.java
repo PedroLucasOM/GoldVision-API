@@ -1,33 +1,27 @@
 package com.system.goldvision.storage;
 
-import com.google.auth.Credentials;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.system.goldvision.config.property.GoldVisionProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 @Component
 public class GoogleCloudStorage {
 
-    private final Storage storage;
+    @Autowired
+    private GoldVisionProperty property;
 
-    private final Bucket bucket;
+    @Autowired
+    private Storage storage;
 
-    private static final Logger logger = LoggerFactory.getLogger(GoogleCloudStorage.class);
-
-    public GoogleCloudStorage() throws IOException {
-        Credentials credentials = GoogleCredentials
-                .fromStream(new FileInputStream("D:\\Google Cloud\\GoldVisionAPI-7fdd71a2068b.json"));
-        this.storage = StorageOptions.newBuilder().setCredentials(credentials)
-                .setProjectId("goldvisionapi").build().getService();
-        this.bucket = this.storage.get("goldvisionapi");
-    }
+    @Autowired
+    private Bucket bucket;
 
     public String salvar(String anexoNovo) {
         Blob blob = this.getBlobFromStorage(anexoNovo);
@@ -36,8 +30,8 @@ public class GoogleCloudStorage {
 
         this.remover(anexoNovo);
 
-        if (anexoNovo.startsWith("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-")) {
-            anexoNovo = anexoNovo.replace("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-", "");
+        if (anexoNovo.startsWith(property.getStorageConfig().getTempFilePrefix())) {
+            anexoNovo = anexoNovo.replace(property.getStorageConfig().getTempFilePrefix(), "");
         }
 
         this.criar(anexoNovo, bytes);
@@ -55,7 +49,7 @@ public class GoogleCloudStorage {
     }
 
     public void remover(String anexo) {
-        BlobId blobId = BlobId.of("goldvisionapi", anexo);
+        BlobId blobId = BlobId.of(property.getStorageConfig().getBucketName(), anexo);
         this.storage.delete(blobId);
     }
 
@@ -70,8 +64,8 @@ public class GoogleCloudStorage {
 
         this.remover(anexoNovo);
 
-        if (anexoNovo.startsWith("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-")) {
-            anexoNovo = anexoNovo.replace("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-", "");
+        if (anexoNovo.startsWith(property.getStorageConfig().getTempFilePrefix())) {
+            anexoNovo = anexoNovo.replace(property.getStorageConfig().getTempFilePrefix(), "");
         }
 
 
@@ -81,7 +75,7 @@ public class GoogleCloudStorage {
     }
 
     public String configurarUrl(String anexo) {
-        return "\\\\storage.googleapis.com/".concat("goldvisionapi")
+        return "\\\\storage.googleapis.com/".concat(property.getStorageConfig().getBucketName())
                 .concat("/").concat(anexo);
     }
 
@@ -90,12 +84,12 @@ public class GoogleCloudStorage {
     }
 
     private String gerarNomeUnico(String originalFilename) {
-        return "C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-".
+        return property.getStorageConfig().getTempFilePrefix().
                 concat(UUID.randomUUID().toString().concat("_").concat(originalFilename));
     }
 
     private Blob getBlobFromStorage(String anexo) {
-        BlobId blobId = BlobId.of("goldvisionapi", anexo);
+        BlobId blobId = BlobId.of(property.getStorageConfig().getBucketName(), anexo);
         return this.storage.get(blobId);
     }
 

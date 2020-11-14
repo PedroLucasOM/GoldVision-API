@@ -95,10 +95,10 @@ public class LancamentoService {
         validarPessoa(lancamento);
 
         if (StringUtils.isEmpty(lancamento.getAnexo())
-            && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+                && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
             this.googleCloudStorage.remover(lancamentoSalvo.getAnexo());
         } else if (StringUtils.hasText(lancamento.getAnexo()) &&
-            !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())){
+                !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
             String anexoNovo = this.googleCloudStorage.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
             lancamento.setAnexo(anexoNovo);
         }

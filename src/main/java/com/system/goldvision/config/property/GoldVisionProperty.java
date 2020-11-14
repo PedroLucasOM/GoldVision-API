@@ -9,6 +9,8 @@ public class GoldVisionProperty {
 
     private final Mail mail = new Mail();
 
+    private final StorageConfig storageConfig = new StorageConfig();
+
     private String originPermitida = "http://localhost:8000";
 
     public Seguranca getSeguranca() {
@@ -25,6 +27,10 @@ public class GoldVisionProperty {
 
     public void setOriginPermitida(String originPermitida) {
         this.originPermitida = originPermitida;
+    }
+
+    public StorageConfig getStorageConfig() {
+        return storageConfig;
     }
 
     public static class Seguranca {
@@ -90,6 +96,49 @@ public class GoldVisionProperty {
 
         public void setEmail(String email) {
             this.email = email;
+        }
+    }
+
+    public static class StorageConfig {
+
+        private String storageConfigPath;
+
+        private String projectID;
+
+        private String bucketName;
+
+        private String tempFilePrefix;
+
+        public String getStorageConfigPath() {
+            return storageConfigPath;
+        }
+
+        public void setStorageConfigPath(String storageConfigPath) {
+            this.storageConfigPath = storageConfigPath;
+        }
+
+        public String getProjectID() {
+            return projectID;
+        }
+
+        public void setProjectID(String projectID) {
+            this.projectID = projectID;
+        }
+
+        public String getBucketName() {
+            return bucketName;
+        }
+
+        public void setBucketName(String bucketName) {
+            this.bucketName = bucketName;
+        }
+
+        public String getTempFilePrefix() {
+            return tempFilePrefix;
+        }
+
+        public void setTempFilePrefix(String tempFilePrefix) {
+            this.tempFilePrefix = tempFilePrefix;
         }
     }
 }
