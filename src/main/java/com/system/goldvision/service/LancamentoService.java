@@ -13,6 +13,7 @@ import com.system.goldvision.repository.UsuarioRepository;
 import com.system.goldvision.repository.filter.LancamentoFilter;
 import com.system.goldvision.repository.lancamento.projection.ResumoLancamento;
 import com.system.goldvision.service.exception.PessoaInativaException;
+import com.system.goldvision.storage.GoogleCloudStorage;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -27,6 +28,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.sql.Date;
@@ -41,14 +43,21 @@ public class LancamentoService {
 
     private static final Logger logger = LoggerFactory.getLogger(LancamentoService.class);
     private static final String DESTINATARIOS = "LISTAR_LANCAMENTO";
+
     @Autowired
     private LancamentoRepository repository;
+
     @Autowired
     private PessoaRepository pessoaRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
+
     @Autowired
     private Mailer mailer;
+
+    @Autowired
+    private GoogleCloudStorage googleCloudStorage;
 
     public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
         return repository.filtrar(filter, pageable);
@@ -68,15 +77,31 @@ public class LancamentoService {
 
     public Lancamento salvar(Lancamento lancamento) {
         Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+
         if (pessoa.isInativo()) {
             throw new PessoaInativaException();
         }
+
+        if (StringUtils.hasText(lancamento.getAnexo())) {
+            String novoAnexo = this.googleCloudStorage.salvar(lancamento.getAnexo());
+            lancamento.setAnexo(novoAnexo);
+        }
+
         return repository.save(lancamento);
     }
 
     public Lancamento atualizar(Lancamento lancamento, Long codigo) {
         Lancamento lancamentoSalvo = buscarLancamentoExistente(codigo);
         validarPessoa(lancamento);
+
+        if (StringUtils.isEmpty(lancamento.getAnexo())
+            && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+            this.googleCloudStorage.remover(lancamentoSalvo.getAnexo());
+        } else if (StringUtils.hasText(lancamento.getAnexo()) &&
+            !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())){
+            String anexoNovo = this.googleCloudStorage.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
+            lancamento.setAnexo(anexoNovo);
+        }
 
         BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
         return repository.save(lancamentoSalvo);
@@ -94,6 +119,10 @@ public class LancamentoService {
     }
 
     public void deletar(Long codigo) {
+        Lancamento lancamento = this.buscarLancamentoExistente(codigo);
+        if (StringUtils.hasText(lancamento.getAnexo())) {
+            this.googleCloudStorage.remover(lancamento.getAnexo());
+        }
         repository.delete(codigo);
     }
 

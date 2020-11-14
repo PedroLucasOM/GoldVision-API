@@ -29,57 +29,74 @@ public class GoogleCloudStorage {
         this.bucket = this.storage.get("goldvisionapi");
     }
 
-    public String salvar(String filename, byte[] bytes, boolean temp) {
+    public String salvar(String anexoNovo) {
+        Blob blob = this.getBlobFromStorage(anexoNovo);
 
-        String nomeUnico = filename;
+        byte[] bytes = blob.getContent();
 
-        if (temp) {
-            nomeUnico = gerarNomeUnico(filename);
+        this.remover(anexoNovo);
+
+        if (anexoNovo.startsWith("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-")) {
+            anexoNovo = anexoNovo.replace("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-", "");
         }
 
-        this.bucket.create(nomeUnico, bytes);
+        this.criar(anexoNovo, bytes);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("Arquivo {} enviado com sucesso para o Google Cloud Storage.",
-                    filename);
-        }
+        return anexoNovo;
+    }
+
+    public String salvarTemporariamente(String filename, byte[] bytes) {
+
+        String nomeUnico = gerarNomeUnico(filename);
+
+        this.criar(nomeUnico, bytes);
 
         return nomeUnico;
     }
-
-    public String configurarUrl(String objeto) {
-        return "\\\\storage.googleapis.com/".concat("goldvisionapi")
-                .concat("/").concat(objeto);
-    }
-
 
     public void remover(String anexo) {
         BlobId blobId = BlobId.of("goldvisionapi", anexo);
         this.storage.delete(blobId);
     }
 
-    public void substituir(String objetoAntigo, String objetoNovo) {
-        if (StringUtils.hasText(objetoAntigo)) {
-            this.remover(objetoAntigo);
+    public String substituir(String anexoAntigo, String anexoNovo) {
+        if (StringUtils.hasText(anexoAntigo)) {
+            this.remover(anexoAntigo);
         }
 
-        BlobId blobId = BlobId.of("goldvisionapi", objetoNovo);
-        Blob blob = this.storage.get(blobId);
+        Blob blob = this.getBlobFromStorage(anexoNovo);
 
         byte[] bytes = blob.getContent();
 
-        this.remover(objetoNovo);
+        this.remover(anexoNovo);
 
-        if (objetoNovo.contains("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-")) {
-            objetoNovo = objetoNovo.replace("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90", "");
+        if (anexoNovo.startsWith("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-")) {
+            anexoNovo = anexoNovo.replace("C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-", "");
         }
 
-        salvar(objetoNovo, bytes, false);
+
+        this.criar(anexoNovo, bytes);
+
+        return anexoNovo;
+    }
+
+    public String configurarUrl(String anexo) {
+        return "\\\\storage.googleapis.com/".concat("goldvisionapi")
+                .concat("/").concat(anexo);
+    }
+
+    private void criar(String nomeUnico, byte[] bytes) {
+        this.bucket.create(nomeUnico, bytes);
     }
 
     private String gerarNomeUnico(String originalFilename) {
         return "C0233190445D9A8BEB9789D7398E8C9693CF30AB4E1352FF8FF5954AC389AB7F5ECD48D5C8D86835436009F941A3E6869ED54C7C23F3CE300CE6DD8EA517FD90-".
                 concat(UUID.randomUUID().toString().concat("_").concat(originalFilename));
+    }
+
+    private Blob getBlobFromStorage(String anexo) {
+        BlobId blobId = BlobId.of("goldvisionapi", anexo);
+        return this.storage.get(blobId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.system.goldvision.resource;
 
+import com.system.goldvision.dto.Anexo;
 import com.system.goldvision.dto.LancamentoEstatisticaCategoria;
 import com.system.goldvision.dto.LancamentoEstatisticaDia;
 import com.system.goldvision.event.RecursoCriadoEvent;
@@ -55,9 +56,9 @@ public class LancamentoResource {
     @PostMapping("/anexo")
     @PreAuthorize("hasAuthority('SALVAR_LANCAMENTO') and #oauth2.hasScope('write')")
     @ApiOperation(value = "Fazer upload de anexo")
-    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-        this.googleCloudStorage.salvar(anexo.getOriginalFilename(), anexo.getBytes(), true);
-        return "ok";
+    public ResponseEntity<Anexo> uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+        String nomeUnico = this.googleCloudStorage.salvarTemporariamente(anexo.getOriginalFilename(), anexo.getBytes());
+        return ResponseEntity.ok(new Anexo(nomeUnico, this.googleCloudStorage.configurarUrl(nomeUnico)));
     }
 
     @GetMapping
@@ -67,7 +68,7 @@ public class LancamentoResource {
         return service.filtrar(filter, pageable);
     }
 
-    @GetMapping(params = "resumir")
+    @GetMapping("/resumir")
     @PreAuthorize("hasAuthority('LISTAR_LANCAMENTO') and #oauth2.hasScope('read')")
     @ApiOperation(value = "Resumir listagem de lançamentos")
     public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
