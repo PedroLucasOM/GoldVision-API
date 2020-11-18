@@ -191,7 +191,7 @@ public class LancamentoService {
 
         arquivos.forEach(blob -> {
             Long diffMills = timestamp.getTime() - blob.getCreateTime();
-            Long diffDays = diffMills / (1000  * 60 * 60 * 24);
+            Long diffDays = diffMills / (1000 * 60 * 60 * 24);
 
             if (diffDays >= 1) {
                 try {

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.system</groupId>
-    <artifactId>algamoneyapi</artifactId>
+    <artifactId>goldvision</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>algamoneyapi</name>
+    <name>goldvisionapi</name>
     <description>Sistema de contabilidade</description>
 
     <properties>
@@ -123,6 +123,11 @@
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-storage</artifactId>
             <version>1.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 
