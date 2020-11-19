@@ -11,6 +11,12 @@ services:
     environment:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SPRING_DATASOURCE_URL: jdbc:mysql://banco:3306/goldvisionapi?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      ORIGEM_PERMITIDA: http://localhost:4200
+      MAIL_USERNAME: goldvisionapi
+      MAIL_PASSWORD: GoldVision@pi
+      MAIL_EMAIL: goldvisionapi@gmail.com
+      STORAGE_ID: goldvisionapi
+      BUCKET_ID: goldvisionapi
     volumes:
       - "./goldvision-credentials.json:/app/goldvision-credentials.json"
 
