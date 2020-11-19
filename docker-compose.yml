@@ -1,5 +1,7 @@
 version: "2"
 
+volumes:
+  app:
 services:
   app:
     build:
@@ -7,11 +9,12 @@ services:
     ports:
       - 8080:8080
     environment:
-      DATABASE_URL: localhost
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://banco:3306/goldvisionapi?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    volumes:
+      - "./goldvision-credentials.json:/app/goldvision-credentials.json"
+
   banco:
     image: mysql:8
     environment:
-      MYSQL_ROOT_USERNAME: root
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
