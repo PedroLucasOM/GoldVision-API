@@ -20,7 +20,7 @@
 
 > 💻 API para controle de finanças com dados estatísticos 📊, rotinas, avisos de lançamentos por e-mail 📭, segurança com OAuth2 usando o JSON Web Tokens 🔐 e documentação de usabilidade com o SwaggerAPI 📋
 
-### 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
+# 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
 
 # Prerequisites
 
