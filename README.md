@@ -36,9 +36,9 @@ docker-compose up -d --build
 
 ## Usage
 
-```sh
-Go to http://localhost:8080/swagger-ui.html
-```
+
+> Go to http://localhost:8080/swagger-ui.html
+
 
 #### Login
 
