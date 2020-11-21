@@ -40,6 +40,26 @@ To do this, you will need to generate and download the authentication keys in th
 
 Follow the steps:
 
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud1.png" width="250" />
+  
+Caso você ainda não possua uma conta de serviço, cria-a clicando na opção superior. Caso já possua, siga para o próximo passo clicando na conta de serviço correspondente:
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud3.png" width="800" /> 
+
+Encontre a aba de chaves e clique na opção de adicionar:
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud4.png" width="600" /> 
+
+Clique na opção de criar nova chave:
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud5.png" width="600" /> 
+
+Selecione a opção JSON para download e clique em criar:
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud6.png" width="600" />
+
+Após ter realizado o download das chaves.json para a sua máquina local, cole-o na raiz do projeto e renomeie-o para **goldvision-credentials.json**.
+
 #### Environment variables
 
 # Run
