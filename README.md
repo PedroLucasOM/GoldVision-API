@@ -1,4 +1,4 @@
-<h1 align="center">
+<h1 align="center" width="100%" style="background-color: #1e94d2">
   <img alt="Logo: GoldVision" src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logo.png" />
 </h1>
 <p>
