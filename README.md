@@ -22,16 +22,16 @@
 
 ### 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
 
-# Prerequisites
+## Prerequisites
 
 - docker
 
-# Install
+## Install
 
 ### Environment settings
 
 
-# Run
+## Run
 
 With the docker started, execute this command at the project root:
 
@@ -39,7 +39,7 @@ With the docker started, execute this command at the project root:
 docker-compose up -d --build
 ```
 
-# Usage
+## Usage
 
 Go to http://localhost:8080/swagger-ui.html
 
@@ -52,20 +52,26 @@ Follow the following action so that you can authenticate yourself in the system 
 
 ### Resources requests
 
+Follow the action to make requests on the available resources:
+
 ![resources](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/resources.gif)
 <br />
 
 ### Models view
+
+Follow the action to view the structure of the models carried in the requisitions:
 
 ![models](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/models.gif)
 <br />
 
 ### Logout
 
+Follow the action to logout:
+
 ![logout](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logout.gif)
 <br />
 
-# Author
+## Author
 
 👤 **Pedro Lucas**
 
@@ -73,14 +79,14 @@ Follow the following action so that you can authenticate yourself in the system 
 * Github: [@PedroLucasOM](https://github.com/PedroLucasOM)
 * LinkedIn: [@PedroLucasOM](https://linkedin.com/in/PedroLucasOM)
 
-# 🤝 Contributing
+## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/PedroLucasOM/GoldVision-API/issues). 
 
-# Show your support
+## Show your support
 
 Give a ⭐️ if this project helped you!
 
-# 📝 License
+## 📝 License
 
 Copyright © 2020 [Pedro Lucas](https://github.com/PedroLucasOM).<br />
