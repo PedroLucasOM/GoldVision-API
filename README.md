@@ -40,27 +40,41 @@ To do this, you will need to generate and download the authentication keys in th
 
 Follow the steps:
 
-<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud1.png" width="250" />
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud-7.png" width="250" />
   
-Caso você ainda não possua uma conta de serviço, cria-a clicando na opção superior. Caso já possua, siga para o próximo passo clicando na conta de serviço correspondente:
+If you do not already have a service account, create it by clicking on the top option. If you already have it, proceed to the next step by clicking on the corresponding service account:
 
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud3.png" width="800" /> 
 
-Encontre a aba de chaves e clique na opção de adicionar:
+Find the Keys tab and click on the option to add:
 
-<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud4.png" width="600" /> 
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud4.png" width="600" />
 
-Clique na opção de criar nova chave:
+Click the option to create a new key:
 
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud5.png" width="600" /> 
 
-Selecione a opção JSON para download e clique em criar:
+Select the JSON option to download and click create:
 
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud6.png" width="600" />
 
-Após ter realizado o download das chaves.json para a sua máquina local, cole-o na raiz do projeto e renomeie-o para **goldvision-credentials.json**.
+After downloading the keys.json to your local machine, paste it at the root of the project and rename it to **goldvision-credentials.json**.
 
 #### Environment variables
+
+You will also need to set the value of some variables in the <a href="https://github.com/PedroLucasOM/GoldVision-API/blob/master/.env"> .env </a> for the application to suit to its context:
+
+```
+MAIL_USERNAME= part of the email address before @ gmail.com
+MAIL_PASSWORD= email account password
+MAIL_EMAIL= full email address
+STORAGE_ID= this information can be found in the Google Cloud Storage tab
+BUCKET_ID= this information can be found in the Google Cloud Storage tab
+```
+
+Example values:
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/env.png" width="600" />
 
 # Run
 
