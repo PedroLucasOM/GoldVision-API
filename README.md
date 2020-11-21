@@ -1,78 +1,77 @@
-<h1 align="center">Welcome to readme-md-generator 👋</h1>
+<h1 align="center">Welcome to GoldVision-API 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/readme-md-generator" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/readme-md-generator.svg">
-  </a>
-  <img src="https://img.shields.io/badge/npm-%3E%3D5.5.0-blue.svg" />
-  <img src="https://img.shields.io/badge/node-%3E%3D9.3.0-blue.svg" />
-  <a href="sfasf" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <img src="https://img.shields.io/badge/java-1.8-blue.svg" />
+  <img src="https://img.shields.io/badge/hibernate-5.3.2-blue.svg" />
+  <img src="https://img.shields.io/badge/spring-1.5.19-blue.svg" />
+  <img src="https://img.shields.io/badge/swagger-2.9.2-blue.svg" />
+  <img src="https://img.shields.io/badge/jasperreports-6.15.0-blue.svg" />
+  <img src="https://img.shields.io/badge/google-cloud-1.17.0-blue.svg" />
+  <a href="https://github.com/PedroLucasOM/MovieViewer#readme" target="_blank">
+    <img alt="documentation" src="https://img.shields.io/badge/documentation-yes-green.svg" />
   </a>
   <a href="https://github.com/kefranabg/readme-md-generator/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+    <img alt="maintenance" src="https://img.shields.io/badge/maintained-yes-green.svg" />
   </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/asf/readme-md-generator" />
-  </a>
-  <a href="https://twitter.com/afsasfa" target="_blank">
-    <img alt="Twitter: afsasfa" src="https://img.shields.io/twitter/follow/afsasfa.svg?style=social" />
+  <a href="https://twitter.com/PedroLucasOM" target="_blank">
+    <img alt="Twitter: PedroLucasOM" src="https://img.shields.io/twitter/follow/PedroLucasOM.svg?style=social" />
   </a>
 </p>
 
-> CLI that generates beautiful README.md files.
+> 💻 API para controle de finanças com dados estatísticos 📊, rotinas, avisos de lançamentos por e-mail 📭, segurança com OAuth2 usando o JSON Web Tokens 🔐 e documentação de usabilidade com o SwaggerAPI 📋
 
-### 🏠 [Homepage](https://github.com/kefranabg/readme-md-generator#readme)
-
-### ✨ [Demo](asfas)
+### 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
 
 ## Prerequisites
 
-- npm >=5.5.0
-- node >=9.3.0
+- docker
 
 ## Install
 
 ```sh
-npm install
+docker-compose up -d --build
 ```
+
+#### Environment settings
 
 ## Usage
 
 ```sh
-npm run start
+Go to http://localhost:8080/swagger-ui.html
 ```
 
-## Run tests
+#### Login
 
-```sh
-npm run test
-```
+<br />
+
+#### Resources requests
+
+<br />
+
+#### Models view
+
+<br />
+
+#### Logout
+
+<br />
 
 ## Author
 
-👤 **Franck Abgrall**
+👤 **Pedro Lucas**
 
-* Website: fasf
-* Twitter: [@afsasfa](https://twitter.com/afsasfa)
-* Github: [@asf](https://github.com/asf)
-* LinkedIn: [@fasfa](https://linkedin.com/in/fasfa)
+* Twitter: [@PedroLucasOM](https://twitter.com/PedroLucasOM)
+* Github: [@PedroLucasOM](https://github.com/PedroLucasOM)
+* LinkedIn: [@PedroLucasOM](https://linkedin.com/in/PedroLucasOM)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kefranabg/readme-md-generator/issues). You can also take a look at the [contributing guide](https://github.com/kefranabg/readme-md-generator/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/PedroLucasOM/GoldVision-API/issues). 
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-<a href="https://www.patreon.com/afas">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
 ## 📝 License
 
-Copyright © 2020 [Franck Abgrall](https://github.com/asf).<br />
-This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+Copyright © 2020 [Pedro Lucas](https://github.com/PedroLucasOM).<br />
