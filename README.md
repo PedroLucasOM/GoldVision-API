@@ -32,6 +32,15 @@
 
 ### Environment settings
 
+#### Google Cloud
+
+You will need to create a Google Cloud account to be able to access Google Cloud Storage and run the application.
+
+To do this, you will need to generate and download the authentication keys in the JSON file.
+
+Follow the steps:
+
+#### Environment variables
 
 # Run
 
