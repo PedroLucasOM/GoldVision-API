@@ -20,7 +20,7 @@
 
 > 💻 API para controle de finanças com dados estatísticos 📊, rotinas, avisos de lançamentos por e-mail 📭, segurança com OAuth2 usando o JSON Web Tokens 🔐 e documentação de usabilidade com o SwaggerAPI 📋
 
-### 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
+# 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
 
 # Prerequisites
 
@@ -47,20 +47,28 @@ Go to http://localhost:8080/swagger-ui.html
 
 Follow the following action so that you can authenticate yourself in the system and make requests in the API:
 
-![login](http://damien.pobel.fr/images/youtube-video-github.gif)
-
+![login](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/login.gif)
 <br />
 
 ### Resources requests
 
+Follow the action to make requests on the available resources:
+
+![resources](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/resources.gif)
 <br />
 
 ### Models view
 
+Follow the action to view the structure of the models carried in the requisitions:
+
+![models](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/models.gif)
 <br />
 
 ### Logout
 
+Follow the action to logout:
+
+![logout](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logout.gif)
 <br />
 
 # Author
