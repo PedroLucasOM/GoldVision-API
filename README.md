@@ -22,48 +22,48 @@
 
 ### 🏠 [Homepage](https://github.com/PedroLucasOM/GoldVision-API)
 
-## Prerequisites
+# Prerequisites
 
 - docker
 
-## Install
+# Install
 
-#### Environment settings
+### Environment settings
 
 
-## Run
+# Run
 
-> With the docker started, execute this command at the project root:
+With the docker started, execute this command at the project root:
 
 ```sh
 docker-compose up -d --build
 ```
 
-## Usage
+# Usage
 
-> Go to http://localhost:8080/swagger-ui.html
+Go to http://localhost:8080/swagger-ui.html
 
-#### Login
+### Login
 
-> Follow the following action so that you can authenticate yourself in the system and make requests in the API:
+Follow the following action so that you can authenticate yourself in the system and make requests in the API:
 
 ![login](http://damien.pobel.fr/images/youtube-video-github.gif)
 
 <br />
 
-#### Resources requests
+### Resources requests
 
 <br />
 
-#### Models view
+### Models view
 
 <br />
 
-#### Logout
+### Logout
 
 <br />
 
-## Author
+# Author
 
 👤 **Pedro Lucas**
 
@@ -71,14 +71,14 @@ docker-compose up -d --build
 * Github: [@PedroLucasOM](https://github.com/PedroLucasOM)
 * LinkedIn: [@PedroLucasOM](https://linkedin.com/in/PedroLucasOM)
 
-## 🤝 Contributing
+# 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/PedroLucasOM/GoldVision-API/issues). 
 
-## Show your support
+# Show your support
 
 Give a ⭐️ if this project helped you!
 
-## 📝 License
+# 📝 License
 
 Copyright © 2020 [Pedro Lucas](https://github.com/PedroLucasOM).<br />
