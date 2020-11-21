@@ -28,19 +28,26 @@
 
 ## Install
 
+#### Environment settings
+
+
+## Run
+
+> With the docker started, execute this command at the project root:
+
 ```sh
 docker-compose up -d --build
 ```
 
-#### Environment settings
-
 ## Usage
-
 
 > Go to http://localhost:8080/swagger-ui.html
 
-
 #### Login
+
+> Follow the following action so that you can authenticate yourself in the system and make requests in the API:
+
+![login](http://damien.pobel.fr/images/youtube-video-github.gif)
 
 <br />
 
