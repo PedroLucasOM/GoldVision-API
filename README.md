@@ -116,6 +116,10 @@ Follow the action to logout:
 ![logout](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logout.gif)
 <br />
 
+### Schedule for sending expired entries
+
+<img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/e-mail.png" width="800" /> 
+
 # Author
 
 👤 **Pedro Lucas**
