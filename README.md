@@ -1,4 +1,6 @@
-<h1 align="center">Welcome to GoldVision-API 👋</h1>
+<h1 align="center">
+  <img alt="Logo: GoldVision" src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logo.png" />
+</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <img src="https://img.shields.io/badge/java-1.8-blue.svg" />
