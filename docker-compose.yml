@@ -16,14 +16,14 @@ services:
     depends_on:
       - banco
     environment:
-      DATABASE_USERNAME:
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SPRING_DATASOURCE_URL: jdbc:mysql://banco:3306/goldvisionapi?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      ORIGEM_PERMITIDA: http://localhost:4200
-      MAIL_USERNAME: goldvisionapi
-      MAIL_PASSWORD: GoldVision@pi
-      MAIL_EMAIL: goldvisionapi@gmail.com
-      STORAGE_ID: goldvisionapi
-      BUCKET_ID: goldvisionapi
+      ORIGEM_PERMITIDA: ${ORIGEM_PERMITIDA}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_EMAIL: ${MAIL_EMAIL}
+      STORAGE_ID: ${STORAGE_ID}
+      BUCKET_ID: ${BUCKET_ID}
     volumes:
       - "./goldvision-credentials.json:/app/goldvision-credentials.json"
