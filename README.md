@@ -47,20 +47,22 @@ Go to http://localhost:8080/swagger-ui.html
 
 Follow the following action so that you can authenticate yourself in the system and make requests in the API:
 
-![login](http://damien.pobel.fr/images/youtube-video-github.gif)
-
+![login](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/login.gif)
 <br />
 
 ### Resources requests
 
+![resources](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/resources.gif)
 <br />
 
 ### Models view
 
+![models](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/models.gif)
 <br />
 
 ### Logout
 
+![logout](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/logout.gif)
 <br />
 
 # Author
