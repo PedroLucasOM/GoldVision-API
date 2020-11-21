@@ -1,14 +1,22 @@
-version: "2"
+version: "3"
 
 volumes:
   app:
+
 services:
+  banco:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
   app:
     build:
       context: .
     ports:
       - 8080:8080
+    depends_on:
+      - banco
     environment:
+      DATABASE_USERNAME:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SPRING_DATASOURCE_URL: jdbc:mysql://banco:3306/goldvisionapi?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
       ORIGEM_PERMITIDA: http://localhost:4200
@@ -19,8 +27,3 @@ services:
       BUCKET_ID: goldvisionapi
     volumes:
       - "./goldvision-credentials.json:/app/goldvision-credentials.json"
-
-  banco:
-    image: mysql:8
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
