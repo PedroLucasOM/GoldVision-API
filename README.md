@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/spring-1.5.19-blue.svg" />
   <img src="https://img.shields.io/badge/swagger-2.9.2-blue.svg" />
   <img src="https://img.shields.io/badge/jasperreports-6.15.0-blue.svg" />
-  <img src="https://img.shields.io/badge/google-cloud-1.17.0-blue.svg" />
+  <img src="https://img.shields.io/badge/googlecloud-1.17.0-blue.svg" />
   <a href="https://github.com/PedroLucasOM/MovieViewer#readme" target="_blank">
     <img alt="documentation" src="https://img.shields.io/badge/documentation-yes-green.svg" />
   </a>
