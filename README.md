@@ -41,31 +41,27 @@ To do this, you will need to generate and download the authentication keys in th
 Follow the steps:
 
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud-7.png" width="250" />
-
+<br />
 
 If you do not already have a service account, create it by clicking on the top option. If you already have it, proceed to the next step by clicking on the corresponding service account:
 
-
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud3.png" width="800" /> 
-
+<br />
 
 Find the Keys tab and click on the option to add:
 
-
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud4.png" width="600" />
-
+<br />
 
 Click the option to create a new key:
 
-
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud5.png" width="600" /> 
-
+<br />
 
 Select the JSON option to download and click create:
 
-
 <img src="https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/google-cloud6.png" width="600" />
-
+<br />
 
 After downloading the keys.json to your local machine, paste it at the root of the project and rename it to **goldvision-credentials.json**.
 
