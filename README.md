@@ -143,4 +143,4 @@ Give a ⭐️ if this project helped you!
 
 # 📝 License
 
-Copyright © 2020 [Pedro Lucas](https://github.com/PedroLucasOM).<br />
+Copyright © 2021 [Pedro Lucas](https://github.com/PedroLucasOM).<br />
