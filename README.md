@@ -10,10 +10,10 @@
   <img src="https://img.shields.io/badge/jasperreports-6.15.0-blue.svg" />
   <img src="https://img.shields.io/badge/googlecloud-1.17.0-blue.svg" />
   <a href="https://github.com/PedroLucasOM/MovieViewer#readme" target="_blank">
-    <img alt="documentation" src="https://img.shields.io/badge/documentation-yes-green.svg" />
+    <img alt="documentation" src="https://img.shields.io/badge/documentation-yes-blue.svg" />
   </a>
   <a href="https://github.com/kefranabg/readme-md-generator/graphs/commit-activity" target="_blank">
-    <img alt="maintenance" src="https://img.shields.io/badge/maintained-yes-green.svg" />
+    <img alt="maintenance" src="https://img.shields.io/badge/maintained-yes-blue.svg" />
   </a>
   <a href="https://twitter.com/PedroLucasOM" target="_blank">
     <img alt="Twitter: PedroLucasOM" src="https://img.shields.io/twitter/follow/PedroLucasOM.svg?style=social" />
