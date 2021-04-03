@@ -20,7 +20,7 @@
   </a>
 </p>
 
-> :computer: API for controlling finances with statistical data  :bar_chart:, routines, e-mail release notices :mailbox_with_no_mail:, security with OAuth2 using JSON Web Tokens :closed_lock_with_key: and usability documentation with SwaggerAPI :clipboard:
+> :computer: API for controlling finances with statistical data  :bar_chart:, routines, e-mail release notices :mailbox_with_no_mail:, security with OAuth2 using JSON Web Tokens :closed_lock_with_key: and usability documentation with SwaggerAPI :clipboard:.
 
 <br/>
 
