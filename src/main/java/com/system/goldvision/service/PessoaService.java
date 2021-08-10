@@ -3,6 +3,7 @@ package com.system.goldvision.service;
 import com.system.goldvision.model.Pessoa;
 import com.system.goldvision.repository.PessoaRepository;
 import com.system.goldvision.repository.filter.PessoaFilter;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +22,9 @@ public class PessoaService {
     }
 
     public Pessoa salvar(Pessoa pessoa) {
-        pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+        if (CollectionUtils.isNotEmpty(pessoa.getContatos())) {
+            pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+        }
         return repository.save(pessoa);
     }
 
