@@ -48,4 +48,4 @@ ENV SERVER_PORT ${SERVER_PORT:-${PORT:-8080}}
 
 EXPOSE ${SERVER_PORT}
 
-CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar app.jar
+CMD java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}

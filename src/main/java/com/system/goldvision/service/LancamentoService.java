@@ -24,14 +24,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -60,6 +65,9 @@ public class LancamentoService {
 
     @Autowired
     private GoogleCloudStorage googleCloudStorage;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     public Page<Lancamento> filtrar(LancamentoFilter filter, Pageable pageable) {
         return repository.filtrar(filter, pageable);
