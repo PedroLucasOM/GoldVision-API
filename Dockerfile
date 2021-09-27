@@ -8,6 +8,8 @@ FROM azul/zulu-openjdk-alpine:8 AS base
 
 WORKDIR /app
 
+RUN apk add --no-cache fontconfig ttf-dejavu
+
 ####################################################################################
 # Imagem de build com maven
 ####################################################################################
