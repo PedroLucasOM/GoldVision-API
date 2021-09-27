@@ -7,7 +7,7 @@ services:
   banco:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DOCKER_DATABASE_PASSWORD}
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       timeout: 20s
@@ -23,15 +23,7 @@ services:
       banco:
         condition: service_healthy
     environment:
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SPRING_DATASOURCE_URL: jdbc:mysql://banco:3306/goldvisionapi?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      ORIGEM_PERMITIDA: ${ORIGEM_PERMITIDA}
-      MAIL_USERNAME: ${MAIL_USERNAME}
-      MAIL_PASSWORD: ${MAIL_PASSWORD}
-      MAIL_EMAIL: ${MAIL_EMAIL}
-      STORAGE_ID: ${STORAGE_ID}
-      BUCKET_ID: ${BUCKET_ID}
     volumes:
       - "./goldvision-credentials.json:/app/goldvision-credentials.json"
       - "./.env:/app/.env"

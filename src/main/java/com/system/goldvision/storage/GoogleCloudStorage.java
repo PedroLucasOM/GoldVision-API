@@ -80,7 +80,7 @@ public class GoogleCloudStorage {
     }
 
     public String configurarUrl(String anexo) {
-        return "\\\\storage.googleapis.com/".concat(property.getStorageConfig().getBucketName())
+        return "\\\\storage.cloud.google.com/".concat(property.getStorageConfig().getBucketName())
                 .concat("/").concat(anexo);
     }
 

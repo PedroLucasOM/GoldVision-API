@@ -27,7 +27,7 @@ public class GoogleCloudStorageConfig {
     @Bean
     public Storage storage() throws IOException {
         return StorageOptions.newBuilder().setCredentials(credentials())
-                .setProjectId(property.getStorageConfig().getProjectID()).build().getService();
+                .setProjectId(property.getStorageConfig().getProjectId()).build().getService();
     }
 
     @Bean

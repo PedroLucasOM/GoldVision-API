@@ -103,7 +103,7 @@ public class GoldVisionProperty {
 
         private String storageConfigPath;
 
-        private String projectID;
+        private String projectId;
 
         private String bucketName;
 
@@ -117,12 +117,12 @@ public class GoldVisionProperty {
             this.storageConfigPath = storageConfigPath;
         }
 
-        public String getProjectID() {
-            return projectID;
+        public String getProjectId() {
+            return projectId;
         }
 
-        public void setProjectID(String projectID) {
-            this.projectID = projectID;
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
         }
 
         public String getBucketName() {
