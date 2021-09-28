@@ -67,14 +67,23 @@ After downloading the keys.json to your local machine, paste it at the root of t
 
 #### Environment variables
 
-You will also need to set the value of some variables in the <a href="https://github.com/PedroLucasOM/GoldVision-API/blob/master/.env"> .env </a> for the application to suit to its context:
+You will also need to create a **.env** file in the root path of the project to configure the application execution. The content of the **.env** must be like this:
 
 ```
-MAIL_USERNAME= part of the email address before @ gmail.com
-MAIL_PASSWORD= email account password
-MAIL_EMAIL= full email address
-STORAGE_ID= this information can be found in the Google Cloud Storage tab
-BUCKET_ID= this information can be found in the Google Cloud Storage tab
+DOCKER_DATABASE_USERNAME= it's recomended set "root" like the example in the picture bellow
+DOCKER_DATABASE_PASSWORD= here you can put any password that you prefer
+
+LOCAL_DATABASE_URL= here you will set your database url connection (it's only necessary if you want to use your own local database, if not, you can let it empty)
+LOCAL_DATABASE_USERNAME= here you will put your local database username (it's only necessary if you want to use your own local database, if not, you can let it empty)
+LOCAL_DATABASE_PASSWORD= here you will put your local database password (it's only necessary if you want to use your own local database, if not, you can let it empty)
+
+ORIGEM_PERMITIDA= here you will put the frontend client url that will consume your application
+
+MAIL_EMAIL= here you will put the email address that will send emails in the application
+MAIL_PASSWORD= here you will put the email password
+
+PROJECT_ID= this information can be found in the Google Cloud Storage Service tab
+BUCKET_ID= this information can be found in the Google Cloud Storage Service tab
 ```
 
 Example values:
