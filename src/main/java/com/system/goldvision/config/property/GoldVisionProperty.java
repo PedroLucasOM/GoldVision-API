@@ -52,11 +52,9 @@ public class GoldVisionProperty {
 
         private Integer port;
 
-        private String username;
+        private String email;
 
         private String password;
-
-        private String email;
 
         public String getHost() {
             return host;
@@ -72,14 +70,6 @@ public class GoldVisionProperty {
 
         public void setPort(Integer port) {
             this.port = port;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
         }
 
         public String getPassword() {
