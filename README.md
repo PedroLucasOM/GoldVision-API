@@ -73,9 +73,9 @@ You will also need to create a **.env** file in the root path of the project to 
 DOCKER_DATABASE_USERNAME= it's recomended set "root" like the example in the picture bellow
 DOCKER_DATABASE_PASSWORD= here you can put any password that you prefer
 
-LOCAL_DATABASE_URL= here you will set your database url connection
-LOCAL_DATABASE_USERNAME= here you will put your local database username
-LOCAL_DATABASE_PASSWORD= here you will put your local database password
+LOCAL_DATABASE_URL= here you will set your database url connection **(it's only necessary if you want to use your own local database, if not, you can let it empty)**
+LOCAL_DATABASE_USERNAME= here you will put your local database username **(it's only necessary if you want to use your own local database, if not, you can let it empty)**
+LOCAL_DATABASE_PASSWORD= here you will put your local database password **(it's only necessary if you want to use your own local database, if not, you can let it empty)**
 
 ORIGEM_PERMITIDA= here you will put the frontend client url that will consume your application
 
