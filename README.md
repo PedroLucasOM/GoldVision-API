@@ -110,7 +110,10 @@ Go to http://localhost:8080/swagger-ui.html
 
 ### Login
 
-Follow the following action so that you can authenticate yourself in the system and make requests in the API:
+Follow the following action so that you can authenticate yourself in the system and make requests in the API.
+
+*User: admin@gmail.com* <br/>
+*Password: admin* <br/>
 
 ![login](https://github.com/PedroLucasOM/GoldVision-API/blob/master/docs/media/login.gif)
 <br />
